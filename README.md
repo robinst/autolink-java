@@ -83,7 +83,14 @@ String result = Autolink.renderLinks(input, linkExtractor, (link, sb) -> {
 result;  // wow <a href="http://test.com">http://test.com</a> such linked
 ```
 
+Contributing
+------------
+
+Pull requests welcome :)!
+
 License
 -------
 
-MIT, see [LICENSE] file.
+Copyright (c) 2015 Robin Stocker
+
+MIT licensed, see LICENSE file.
