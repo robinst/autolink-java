@@ -82,7 +82,7 @@ String result = Autolink.renderLinks(input, linkExtractor, (link, sb) -> {
     sb.append(input, link.getBeginIndex(), link.getEndIndex());
     sb.append("</a>");
 });
-result;  // wow <a href="http://test.com">http://test.com</a> such linked
+result;  // "wow <a href=\"http://test.com\">http://test.com</a> such linked"
 ```
 
 Contributing
