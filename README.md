@@ -8,6 +8,8 @@ Inspired by [Rinku](https://github.com/vmg/rinku). Similar to it, regular
 expressions are not used. Instead, the input text is parsed in one pass with
 limited backtracking.
 
+[![Build status](https://travis-ci.org/robinst/autolink-java.svg?branch=master)](https://travis-ci.org/robinst/autolink-java)
+
 Features
 --------
 
