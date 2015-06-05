@@ -37,7 +37,6 @@ public class EmailScanner implements Scanner {
     private int findFirst(CharSequence input, int beginIndex, int rewindIndex) {
         int first = -1;
         boolean atomBoundary = true;
-        // >= or > ?
         for (int i = beginIndex; i >= rewindIndex; i--) {
             char c = input.charAt(i);
             if (localAtomAllowed(c)) {
