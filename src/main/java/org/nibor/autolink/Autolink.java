@@ -11,7 +11,7 @@ public class Autolink {
      *
      * @param input the input text
      * @param links the links to render, see {@link LinkExtractor} to extract them
-     * @param linkRenderer the link rendering function
+     * @param linkRenderer the link rendering implementation
      * @return the rendered string
      */
     public static String renderLinks(CharSequence input, Iterable<LinkSpan> links, LinkRenderer linkRenderer) {
@@ -19,7 +19,7 @@ public class Autolink {
         int lastIndex = 0;
         for (LinkSpan link : links) {
             sb.append(input, lastIndex, link.getBeginIndex());
-            linkRenderer.render(link, sb);
+            linkRenderer.render(link, input, sb);
             lastIndex = link.getEndIndex();
         }
         if (lastIndex < input.length()) {

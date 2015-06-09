@@ -16,16 +16,16 @@ public abstract class AutolinkTestCase {
 
     protected abstract LinkExtractor getLinkExtractor();
 
-    protected String link(final String input, final String marker, final LinkType expectedLinkType) {
+    protected String link(String input, final String marker, final LinkType expectedLinkType) {
         Iterable<LinkSpan> links = getLinkExtractor().extractLinks(input);
         return Autolink.renderLinks(input, links, new LinkRenderer() {
             @Override
-            public void render(LinkSpan link, StringBuilder sb) {
+            public void render(LinkSpan link, CharSequence text, StringBuilder sb) {
                 if (expectedLinkType != null) {
                     assertEquals(expectedLinkType, link.getType());
                 }
                 sb.append(marker);
-                sb.append(input, link.getBeginIndex(), link.getEndIndex());
+                sb.append(text, link.getBeginIndex(), link.getEndIndex());
                 sb.append(marker);
             }
         });

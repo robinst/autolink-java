@@ -76,11 +76,11 @@ LinkExtractor linkExtractor = LinkExtractor.builder()
         .linkTypes(EnumSet.of(LinkType.URL)) // limit to URLs
         .build();
 Iterable<LinkSpan> links = linkExtractor.extractLinks(input);
-String result = Autolink.renderLinks(input, links, (link, sb) -> {
+String result = Autolink.renderLinks(input, links, (link, text, sb) -> {
     sb.append("<a href=\"");
-    sb.append(input, link.getBeginIndex(), link.getEndIndex());
+    sb.append(text, link.getBeginIndex(), link.getEndIndex());
     sb.append("\">");
-    sb.append(input, link.getBeginIndex(), link.getEndIndex());
+    sb.append(text, link.getBeginIndex(), link.getEndIndex());
     sb.append("</a>");
 });
 result;  // "wow <a href=\"http://test.com\">http://test.com</a> such linked"
