@@ -10,44 +10,6 @@ limited backtracking.
 
 [![Build status](https://travis-ci.org/robinst/autolink-java.svg?branch=master)](https://travis-ci.org/robinst/autolink-java)
 
-Features
---------
-
-### URL extraction
-
-Extracts URLs of the form `scheme://example` with any scheme. URIs such
-as `example:test` are not matched (may be added as an option in the future).
-If only certain schemes should be allowed, the result can be filtered.
-
-Includes heuristics for not including trailing delimiters such as punctuation
-and unbalanced parentheses, see examples below.
-
-Supports internationalized domain names (IDN). Note that they are not validated
-and as a result, invalid URLs may be matched.
-
-Example input and the extracted link:
-
-* `http://example.com.` → `http://example.com`
-* `http://example.com,` → `http://example.com`
-* `(http://example.com)` → `http://example.com`
-* `(... (see http://example.com))` → `http://example.com`
-* `https://en.wikipedia.org/wiki/Link_(The_Legend_of_Zelda)` →
-  `https://en.wikipedia.org/wiki/Link_(The_Legend_of_Zelda)`
-* `http://üñîçøðé.com/` → `http://üñîçøðé.com/`
-
-### Email address extraction
-
-Extracts emails such as `foo@example.com`. Doesn't support quoted local parts
-such as `"this is sparta"@example.com`. Matches international email addresses,
-but doesn't verify the domain name (may match too much).
-
-Examples:
-
-* `foo@example.com` → `foo@example.com`
-* `foo@example.com.` → `foo@example.com`
-* `foo@example.com,` → `foo@example.com`
-* `üñîçøðé@üñîçøðé.com` → `üñîçøðé@üñîçøðé.com`
-
 Usage
 -----
 
@@ -85,6 +47,44 @@ String result = Autolink.renderLinks(input, links, (link, text, sb) -> {
 });
 result;  // "wow <a href=\"http://test.com\">http://test.com</a> such linked"
 ```
+
+Features
+--------
+
+### URL extraction
+
+Extracts URLs of the form `scheme://example` with any scheme. URIs such
+as `example:test` are not matched (may be added as an option in the future).
+If only certain schemes should be allowed, the result can be filtered.
+
+Includes heuristics for not including trailing delimiters such as punctuation
+and unbalanced parentheses, see examples below.
+
+Supports internationalized domain names (IDN). Note that they are not validated
+and as a result, invalid URLs may be matched.
+
+Example input and the extracted link:
+
+* `http://example.com.` → `http://example.com`
+* `http://example.com,` → `http://example.com`
+* `(http://example.com)` → `http://example.com`
+* `(... (see http://example.com))` → `http://example.com`
+* `https://en.wikipedia.org/wiki/Link_(The_Legend_of_Zelda)` →
+  `https://en.wikipedia.org/wiki/Link_(The_Legend_of_Zelda)`
+* `http://üñîçøðé.com/` → `http://üñîçøðé.com/`
+
+### Email address extraction
+
+Extracts emails such as `foo@example.com`. Doesn't support quoted local parts
+such as `"this is sparta"@example.com`. Matches international email addresses,
+but doesn't verify the domain name (may match too much).
+
+Examples:
+
+* `foo@example.com` → `foo@example.com`
+* `foo@example.com.` → `foo@example.com`
+* `foo@example.com,` → `foo@example.com`
+* `üñîçøðé@üñîçøðé.com` → `üñîçøðé@üñîçøðé.com`
 
 Contributing
 ------------
