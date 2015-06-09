@@ -8,7 +8,6 @@ import org.junit.runners.Parameterized.Parameters;
 
 import java.util.Arrays;
 import java.util.EnumSet;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -127,8 +126,8 @@ public class AutolinkUrlTest extends AutolinkTestCase {
 
     @Test
     public void linkToString() {
-        List<Link> links = getLinkExtractor().getLinks("wow, so example: http://test.com");
-        assertEquals("Link{type=URL, beginIndex=17, endIndex=32}", links.get(0).toString());
+        Iterable<Link> links = getLinkExtractor().extractLinks("wow, so example: http://test.com");
+        assertEquals("Link{type=URL, beginIndex=17, endIndex=32}", links.iterator().next().toString());
     }
 
     @Override

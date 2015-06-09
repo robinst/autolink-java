@@ -58,8 +58,8 @@ import org.nibor.autolink.*;
 
 String input = "wow, so example: http://test.com";
 LinkExtractor linkExtractor = LinkExtractor.builder().build();
-List<Link> links = linkExtractor.getLinks(input);
-Link link = links.get(0);
+Iterable<Link> links = linkExtractor.extractLinks(input);
+Link link = links.iterator().next();
 link.getType();        // LinkType.URL
 link.getBeginIndex();  // 17
 link.getEndIndex();    // 32
@@ -75,7 +75,8 @@ String input = "wow http://test.com such linked";
 LinkExtractor linkExtractor = LinkExtractor.builder()
         .linkTypes(EnumSet.of(LinkType.URL)) // limit to URLs
         .build();
-String result = Autolink.renderLinks(input, linkExtractor, (link, sb) -> {
+Iterable<Link> links = linkExtractor.extractLinks(input);
+String result = Autolink.renderLinks(input, links, (link, sb) -> {
     sb.append("<a href=\"");
     sb.append(input, link.getBeginIndex(), link.getEndIndex());
     sb.append("\">");

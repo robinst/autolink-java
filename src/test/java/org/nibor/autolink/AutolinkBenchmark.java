@@ -19,7 +19,12 @@ public class AutolinkBenchmark extends AutolinkTestCase {
 
     public static void main(String[] args) throws Exception {
         System.out.println("input length: " + GENERATED_INPUT.length());
-        System.out.println("number of links: " + LinkExtractor.builder().build().getLinks(GENERATED_INPUT).size());
+        Iterable<Link> links = LinkExtractor.builder().build().extractLinks(GENERATED_INPUT);
+        int count = 0;
+        for (Link ignore : links) {
+            count++;
+        }
+        System.out.println("number of links: " + count);
         System.out.println();
         Main.main(args);
     }

@@ -17,7 +17,8 @@ public abstract class AutolinkTestCase {
     protected abstract LinkExtractor getLinkExtractor();
 
     protected String link(final String input, final String marker, final LinkType expectedLinkType) {
-        return Autolink.renderLinks(input, getLinkExtractor(), new LinkRenderer() {
+        Iterable<Link> links = getLinkExtractor().extractLinks(input);
+        return Autolink.renderLinks(input, links, new LinkRenderer() {
             @Override
             public void render(Link link, StringBuilder sb) {
                 if (expectedLinkType != null) {

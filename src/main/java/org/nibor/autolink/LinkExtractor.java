@@ -8,8 +8,8 @@ import java.util.*;
 
 /**
  * Extracts links from input.
- * <p>
- * Create and configure an extractor using {@link #builder()}.
+ * <p/>
+ * Create and configure an extractor using {@link #builder()}, then call {@link #extractLinks}.
  */
 public class LinkExtractor {
 
@@ -27,35 +27,18 @@ public class LinkExtractor {
     }
 
     /**
-     * Extract the links from the input. Can be called multiple times with different inputs, is thread-safe.
+     * Extract the links from the input text. Can be called multiple times with different inputs (thread-safe).
      *
      * @param input the input text, must not be {@code null}
-     * @return the links, in order that they appear in the input, never {@code null}
+     * @return a lazy iterable for the links in order that they appear in the input, never {@code null}
      */
-    public List<Link> getLinks(CharSequence input) {
-        List<Link> links = new ArrayList<>();
-
-        int rewindIndex = 0;
-        int[] result = new int[2];
-
-        int i = 0;
-        int length = input.length();
-        while (i < length) {
-            Scanner scanner = trigger(input.charAt(i));
-            if (scanner != null) {
-                boolean found = scanner.scan(input, i, rewindIndex, result);
-                if (found) {
-                    links.add(new LinkImpl(scanner.getLinkType(), result[0], result[1]));
-                    rewindIndex = result[1];
-                    i = result[1];
-                } else {
-                    i++;
-                }
-            } else {
-                i++;
+    public Iterable<Link> extractLinks(final CharSequence input) {
+        return new Iterable<Link>() {
+            @Override
+            public Iterator<Link> iterator() {
+                return new LinkIterator(input);
             }
-        }
-        return links;
+        };
     }
 
     private Scanner trigger(char c) {
@@ -88,7 +71,7 @@ public class LinkExtractor {
          * @return this builder
          */
         public Builder linkTypes(Set<LinkType> linkTypes) {
-            this.linkTypes = Objects.requireNonNull(linkTypes, "linkTypes must not be null");
+            this.linkTypes = new HashSet<>(Objects.requireNonNull(linkTypes, "linkTypes must not be null"));
             return this;
         }
 
@@ -133,4 +116,58 @@ public class LinkExtractor {
         }
     }
 
+    private class LinkIterator implements Iterator<Link> {
+
+        private final CharSequence input;
+
+        private Link next = null;
+        private int index = 0;
+        private int rewindIndex = 0;
+        private int[] result = new int[2];
+
+        public LinkIterator(CharSequence input) {
+            this.input = input;
+        }
+
+        @Override
+        public boolean hasNext() {
+            setNext();
+            return next != null;
+        }
+
+        @Override
+        public Link next() {
+            if (hasNext()) {
+                Link link = next;
+                next = null;
+                return link;
+            } else {
+                throw new NoSuchElementException();
+            }
+        }
+
+        private void setNext() {
+            if (next != null) {
+                return;
+            }
+
+            int length = input.length();
+            while (index < length) {
+                Scanner scanner = trigger(input.charAt(index));
+                if (scanner != null) {
+                    boolean found = scanner.scan(input, index, rewindIndex, result);
+                    if (found) {
+                        next = new LinkImpl(scanner.getLinkType(), result[0], result[1]);
+                        rewindIndex = result[1];
+                        index = result[1];
+                        break;
+                    } else {
+                        index++;
+                    }
+                } else {
+                    index++;
+                }
+            }
+        }
+    }
 }
