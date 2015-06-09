@@ -126,7 +126,7 @@ public class AutolinkUrlTest extends AutolinkTestCase {
 
     @Test
     public void linkToString() {
-        Iterable<Link> links = getLinkExtractor().extractLinks("wow, so example: http://test.com");
+        Iterable<LinkSpan> links = getLinkExtractor().extractLinks("wow, so example: http://test.com");
         assertEquals("Link{type=URL, beginIndex=17, endIndex=32}", links.iterator().next().toString());
     }
 

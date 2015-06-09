@@ -3,7 +3,7 @@ package org.nibor.autolink;
 /**
  * Information for an extracted link.
  */
-public interface Link {
+public interface LinkSpan {
 
     /**
      * @return the type of link

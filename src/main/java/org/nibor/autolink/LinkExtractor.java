@@ -32,10 +32,10 @@ public class LinkExtractor {
      * @param input the input text, must not be {@code null}
      * @return a lazy iterable for the links in order that they appear in the input, never {@code null}
      */
-    public Iterable<Link> extractLinks(final CharSequence input) {
-        return new Iterable<Link>() {
+    public Iterable<LinkSpan> extractLinks(final CharSequence input) {
+        return new Iterable<LinkSpan>() {
             @Override
-            public Iterator<Link> iterator() {
+            public Iterator<LinkSpan> iterator() {
                 return new LinkIterator(input);
             }
         };
@@ -83,13 +83,13 @@ public class LinkExtractor {
         }
     }
 
-    private static class LinkImpl implements Link {
+    private static class LinkSpanImpl implements LinkSpan {
 
         private final LinkType linkType;
         private final int beginIndex;
         private final int endIndex;
 
-        private LinkImpl(LinkType linkType, int beginIndex, int endIndex) {
+        private LinkSpanImpl(LinkType linkType, int beginIndex, int endIndex) {
             this.linkType = linkType;
             this.beginIndex = beginIndex;
             this.endIndex = endIndex;
@@ -116,11 +116,11 @@ public class LinkExtractor {
         }
     }
 
-    private class LinkIterator implements Iterator<Link> {
+    private class LinkIterator implements Iterator<LinkSpan> {
 
         private final CharSequence input;
 
-        private Link next = null;
+        private LinkSpan next = null;
         private int index = 0;
         private int rewindIndex = 0;
         private int[] result = new int[2];
@@ -136,9 +136,9 @@ public class LinkExtractor {
         }
 
         @Override
-        public Link next() {
+        public LinkSpan next() {
             if (hasNext()) {
-                Link link = next;
+                LinkSpan link = next;
                 next = null;
                 return link;
             } else {
@@ -157,7 +157,7 @@ public class LinkExtractor {
                 if (scanner != null) {
                     boolean found = scanner.scan(input, index, rewindIndex, result);
                     if (found) {
-                        next = new LinkImpl(scanner.getLinkType(), result[0], result[1]);
+                        next = new LinkSpanImpl(scanner.getLinkType(), result[0], result[1]);
                         rewindIndex = result[1];
                         index = result[1];
                         break;

@@ -11,15 +11,15 @@ public class LinkExtractorIterableTest {
 
     @Test
     public void iteratorIsNew() {
-        Iterable<Link> iterable = getSingleElementIterable();
+        Iterable<LinkSpan> iterable = getSingleElementIterable();
         assertEquals(LinkType.URL, iterable.iterator().next().getType());
         assertEquals(LinkType.URL, iterable.iterator().next().getType());
     }
 
     @Test
     public void hasNextOnlyAdvancesOnce() {
-        Iterable<Link> iterable = getSingleElementIterable();
-        Iterator<Link> iterator = iterable.iterator();
+        Iterable<LinkSpan> iterable = getSingleElementIterable();
+        Iterator<LinkSpan> iterator = iterable.iterator();
         assertTrue(iterator.hasNext());
         assertTrue(iterator.hasNext());
         assertNotNull(iterator.next());
@@ -29,13 +29,13 @@ public class LinkExtractorIterableTest {
 
     @Test(expected = NoSuchElementException.class)
     public void nextThrowsNoSuchElementException() {
-        Iterable<Link> iterable = getSingleElementIterable();
-        Iterator<Link> iterator = iterable.iterator();
+        Iterable<LinkSpan> iterable = getSingleElementIterable();
+        Iterator<LinkSpan> iterator = iterable.iterator();
         assertNotNull(iterator.next());
         iterator.next();
     }
 
-    private Iterable<Link> getSingleElementIterable() {
+    private Iterable<LinkSpan> getSingleElementIterable() {
         String input = "foo http://example.com";
         return LinkExtractor.builder().build().extractLinks(input);
     }

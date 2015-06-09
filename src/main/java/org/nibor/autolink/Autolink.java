@@ -14,10 +14,10 @@ public class Autolink {
      * @param linkRenderer the link rendering function
      * @return the rendered string
      */
-    public static String renderLinks(CharSequence input, Iterable<Link> links, LinkRenderer linkRenderer) {
+    public static String renderLinks(CharSequence input, Iterable<LinkSpan> links, LinkRenderer linkRenderer) {
         StringBuilder sb = new StringBuilder(input.length() + 16);
         int lastIndex = 0;
-        for (Link link : links) {
+        for (LinkSpan link : links) {
             sb.append(input, lastIndex, link.getBeginIndex());
             linkRenderer.render(link, sb);
             lastIndex = link.getEndIndex();

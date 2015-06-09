@@ -2,6 +2,6 @@ package org.nibor.autolink;
 
 public interface LinkRenderer {
 
-    void render(Link link, StringBuilder sb);
+    void render(LinkSpan link, StringBuilder sb);
 
 }
