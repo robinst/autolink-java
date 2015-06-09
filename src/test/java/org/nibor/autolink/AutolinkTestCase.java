@@ -16,11 +16,13 @@ public abstract class AutolinkTestCase {
 
     protected abstract LinkExtractor getLinkExtractor();
 
-    private String link(final String input, final String marker, final LinkType expectedLinkType) {
+    protected String link(final String input, final String marker, final LinkType expectedLinkType) {
         return Autolink.renderLinks(input, getLinkExtractor(), new LinkRenderer() {
             @Override
             public void render(Link link, StringBuilder sb) {
-                assertEquals(expectedLinkType, link.getType());
+                if (expectedLinkType != null) {
+                    assertEquals(expectedLinkType, link.getType());
+                }
                 sb.append(marker);
                 sb.append(input, link.getBeginIndex(), link.getEndIndex());
                 sb.append(marker);
