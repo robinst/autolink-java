@@ -146,6 +146,11 @@ public class LinkExtractor {
             }
         }
 
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException("remove");
+        }
+
         private void setNext() {
             if (next != null) {
                 return;
