@@ -1,5 +1,5 @@
 /**
- * Extract links such as URLs and email addresses from plain text. See {@link org.nibor.autolink.LinkExtractor} for
- * extracting links and {@link org.nibor.autolink.Autolink} for processing links in text.
+ * Extract links such as URLs and email addresses from plain text (see {@link org.nibor.autolink.LinkExtractor}) and
+ * process the text by rendering the links (see {@link org.nibor.autolink.Autolink}).
  */
 package org.nibor.autolink;
