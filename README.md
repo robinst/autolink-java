@@ -63,15 +63,17 @@ and unbalanced parentheses, see examples below.
 Supports internationalized domain names (IDN). Note that they are not validated
 and as a result, invalid URLs may be matched.
 
-Example input and the extracted link:
+Example input and linked result:
 
-* `http://example.com.` → `http://example.com`
-* `http://example.com,` → `http://example.com`
-* `(http://example.com)` → `http://example.com`
-* `(... (see http://example.com))` → `http://example.com`
+* `http://example.com.` → [http://example.com]().
+* `http://example.com,` → [http://example.com](),
+* `(http://example.com)` → ([http://example.com]())
+* `(... (see http://example.com))` → (... (see [http://example.com]()))
 * `https://en.wikipedia.org/wiki/Link_(The_Legend_of_Zelda)` →
-  `https://en.wikipedia.org/wiki/Link_(The_Legend_of_Zelda)`
-* `http://üñîçøðé.com/` → `http://üñîçøðé.com/`
+  [https://en.wikipedia.org/wiki/Link_(The_Legend_of_Zelda)]()
+* `http://üñîçøðé.com/` → [http://üñîçøðé.com/]()
+
+Also see [test cases](src/test/java/org/nibor/autolink/AutolinkUrlTest.java).
 
 ### Email address extraction
 
@@ -81,10 +83,12 @@ but doesn't verify the domain name (may match too much).
 
 Examples:
 
-* `foo@example.com` → `foo@example.com`
-* `foo@example.com.` → `foo@example.com`
-* `foo@example.com,` → `foo@example.com`
-* `üñîçøðé@üñîçøðé.com` → `üñîçøðé@üñîçøðé.com`
+* `foo@example.com` → [foo@example.com]()
+* `foo@example.com.` → [foo@example.com]().
+* `foo@example.com,` → [foo@example.com](),
+* `üñîçøðé@üñîçøðé.com` → [üñîçøðé@üñîçøðé.com]()
+
+Also see [test cases](src/test/java/org/nibor/autolink/AutolinkEmailTest.java).
 
 Contributing
 ------------
