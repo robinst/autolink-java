@@ -83,39 +83,6 @@ public class LinkExtractor {
         }
     }
 
-    private static class LinkSpanImpl implements LinkSpan {
-
-        private final LinkType linkType;
-        private final int beginIndex;
-        private final int endIndex;
-
-        private LinkSpanImpl(LinkType linkType, int beginIndex, int endIndex) {
-            this.linkType = linkType;
-            this.beginIndex = beginIndex;
-            this.endIndex = endIndex;
-        }
-
-        @Override
-        public LinkType getType() {
-            return linkType;
-        }
-
-        @Override
-        public int getBeginIndex() {
-            return beginIndex;
-        }
-
-        @Override
-        public int getEndIndex() {
-            return endIndex;
-        }
-
-        @Override
-        public String toString() {
-            return "Link{type=" + getType() + ", beginIndex=" + beginIndex + ", endIndex=" + endIndex + "}";
-        }
-    }
-
     private class LinkIterator implements Iterator<LinkSpan> {
 
         private final CharSequence input;
@@ -123,7 +90,6 @@ public class LinkExtractor {
         private LinkSpan next = null;
         private int index = 0;
         private int rewindIndex = 0;
-        private int[] result = new int[2];
 
         public LinkIterator(CharSequence input) {
             this.input = input;
@@ -160,11 +126,11 @@ public class LinkExtractor {
             while (index < length) {
                 Scanner scanner = trigger(input.charAt(index));
                 if (scanner != null) {
-                    boolean found = scanner.scan(input, index, rewindIndex, result);
-                    if (found) {
-                        next = new LinkSpanImpl(scanner.getLinkType(), result[0], result[1]);
-                        rewindIndex = result[1];
-                        index = result[1];
+                    LinkSpan link = scanner.scan(input, index, rewindIndex);
+                    if (link != null) {
+                        next = link;
+                        index = link.getEndIndex();
+                        rewindIndex = index;
                         break;
                     } else {
                         index++;

@@ -1,5 +1,6 @@
 package org.nibor.autolink.internal;
 
+import org.nibor.autolink.LinkSpan;
 import org.nibor.autolink.LinkType;
 
 /**
@@ -10,28 +11,21 @@ import org.nibor.autolink.LinkType;
 public class UrlScanner implements Scanner {
 
     @Override
-    public LinkType getLinkType() {
-        return LinkType.URL;
-    }
-
-    @Override
-    public boolean scan(CharSequence input, int triggerIndex, int rewindIndex, int[] result) {
+    public LinkSpan scan(CharSequence input, int triggerIndex, int rewindIndex) {
         int length = input.length();
         int afterSlashSlash = triggerIndex + 3;
         if (afterSlashSlash >= length || input.charAt(triggerIndex + 1) != '/' || input.charAt(triggerIndex + 2) != '/') {
-            return false;
+            return null;
         }
 
         int first = findFirst(input, triggerIndex - 1, rewindIndex);
         if (first == -1) {
-            return false;
+            return null;
         }
 
         int last = findLast(input, afterSlashSlash);
 
-        result[0] = first;
-        result[1] = last + 1;
-        return true;
+        return new LinkSpanImpl(LinkType.URL, first, last + 1);
     }
 
     // See "scheme" in RFC 3986

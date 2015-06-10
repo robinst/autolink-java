@@ -1,5 +1,6 @@
 package org.nibor.autolink.internal;
 
+import org.nibor.autolink.LinkSpan;
 import org.nibor.autolink.LinkType;
 
 /**
@@ -10,27 +11,20 @@ import org.nibor.autolink.LinkType;
 public class EmailScanner implements Scanner {
 
     @Override
-    public LinkType getLinkType() {
-        return LinkType.EMAIL;
-    }
-
-    @Override
-    public boolean scan(CharSequence input, int triggerIndex, int rewindIndex, int[] result) {
+    public LinkSpan scan(CharSequence input, int triggerIndex, int rewindIndex) {
         int beforeAt = triggerIndex - 1;
         int first = findFirst(input, beforeAt, rewindIndex);
         if (first == -1) {
-            return false;
+            return null;
         }
 
         int afterAt = triggerIndex + 1;
         int last = findLast(input, afterAt);
         if (last == -1) {
-            return false;
+            return null;
         }
 
-        result[0] = first;
-        result[1] = last + 1;
-        return true;
+        return new LinkSpanImpl(LinkType.EMAIL, first, last + 1);
     }
 
     // See "Local-part" in RFC 5321, plus extensions in RFC 6531
