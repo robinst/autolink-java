@@ -77,9 +77,8 @@ Also see [test cases](src/test/java/org/nibor/autolink/AutolinkUrlTest.java).
 
 ### Email address extraction
 
-Extracts emails such as `foo@example.com`. Doesn't support quoted local parts
-such as `"this is sparta"@example.com`. Matches international email addresses,
-but doesn't verify the domain name (may match too much).
+Extracts emails such as `foo@example.com`. Matches international email
+addresses, but doesn't verify the domain name (may match too much).
 
 Examples:
 
@@ -87,6 +86,14 @@ Examples:
 * `foo@example.com.` → [foo@example.com]().
 * `foo@example.com,` → [foo@example.com](),
 * `üñîçøðé@üñîçøðé.com` → [üñîçøðé@üñîçøðé.com]()
+
+Not supported:
+
+* Quoted local parts, e.g. `"this is sparta"@example.com`
+* Address literals, e.g. `foo@[127.0.0.1]`
+
+Note that the domain part can be a single top-level domain (e.g.
+`foo@com`). If this is not wanted, filter the resulting links.
 
 Also see [test cases](src/test/java/org/nibor/autolink/AutolinkEmailTest.java).
 
