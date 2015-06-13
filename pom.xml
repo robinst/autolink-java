@@ -43,6 +43,45 @@
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>com.github.siom79.japicmp</groupId>
+                <artifactId>japicmp-maven-plugin</artifactId>
+                <version>0.5.0</version>
+                <configuration>
+                    <oldVersion>
+                        <dependency>
+                            <groupId>org.nibor.autolink</groupId>
+                            <artifactId>autolink</artifactId>
+                            <version>0.2.0</version>
+                        </dependency>
+                    </oldVersion>
+                    <newVersion>
+                        <file>
+                            <path>${project.build.directory}/${project.artifactId}-${project.version}.jar</path>
+                        </file>
+                    </newVersion>
+                    <parameter>
+                        <excludes>
+                            <exclude>*.internal</exclude>
+                            <exclude>*.internal.*</exclude>
+                        </excludes>
+                        <accessModifier>public</accessModifier>
+                        <breakBuildOnModifications>true</breakBuildOnModifications>
+                        <breakBuildOnBinaryIncompatibleModifications>true</breakBuildOnBinaryIncompatibleModifications>
+                        <onlyModified>true</onlyModified>
+                        <onlyBinaryIncompatible>false</onlyBinaryIncompatible>
+                        <includeSynthetic>false</includeSynthetic>
+                    </parameter>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>cmp</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
                 <version>1.6.5</version>
