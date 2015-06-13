@@ -10,6 +10,12 @@ import org.nibor.autolink.LinkType;
  */
 public class EmailScanner implements Scanner {
 
+    private final boolean domainMustHaveDot;
+
+    public EmailScanner(boolean domainMustHaveDot) {
+        this.domainMustHaveDot = domainMustHaveDot;
+    }
+
     @Override
     public LinkSpan scan(CharSequence input, int triggerIndex, int rewindIndex) {
         int beforeAt = triggerIndex - 1;
@@ -50,15 +56,16 @@ public class EmailScanner implements Scanner {
 
     // See "Domain" in RFC 5321, plus extension of "sub-domain" in RFC 6531
     private int findLast(CharSequence input, int beginIndex) {
-        boolean firstSubDomain = true;
+        boolean firstInSubDomain = true;
         boolean canEndSubDomain = false;
+        int firstDot = -1;
         int last = -1;
         for (int i = beginIndex; i < input.length(); i++) {
             char c = input.charAt(i);
-            if (firstSubDomain) {
+            if (firstInSubDomain) {
                 if (subDomainAllowed(c)) {
                     last = i;
-                    firstSubDomain = false;
+                    firstInSubDomain = false;
                     canEndSubDomain = true;
                 } else {
                     break;
@@ -68,7 +75,10 @@ public class EmailScanner implements Scanner {
                     if (!canEndSubDomain) {
                         break;
                     }
-                    firstSubDomain = true;
+                    firstInSubDomain = true;
+                    if (firstDot == -1) {
+                        firstDot = i;
+                    }
                 } else if (c == '-') {
                     canEndSubDomain = false;
                 } else if (subDomainAllowed(c)) {
@@ -79,7 +89,11 @@ public class EmailScanner implements Scanner {
                 }
             }
         }
-        return last;
+        if (domainMustHaveDot && (firstDot == -1 || firstDot > last)) {
+            return -1;
+        } else {
+            return last;
+        }
     }
 
     // See "Atom" in RFC 5321, "atext" in RFC 5322

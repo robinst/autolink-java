@@ -13,13 +13,12 @@ import java.util.*;
  */
 public class LinkExtractor {
 
-    private static Scanner URL_SCANNER = new UrlScanner();
-    private static Scanner EMAIL_SCANNER = new EmailScanner();
+    private final Scanner urlScanner;
+    private final Scanner emailScanner;
 
-    private final Set<LinkType> linkTypes;
-
-    private LinkExtractor(Set<LinkType> linkTypes) {
-        this.linkTypes = linkTypes;
+    private LinkExtractor(UrlScanner urlScanner, EmailScanner emailScanner) {
+        this.urlScanner = urlScanner;
+        this.emailScanner = emailScanner;
     }
 
     public static Builder builder() {
@@ -44,14 +43,9 @@ public class LinkExtractor {
     private Scanner trigger(char c) {
         switch (c) {
             case ':':
-                if (linkTypes.contains(LinkType.URL)) {
-                    return URL_SCANNER;
-                }
-                break;
+                return urlScanner;
             case '@':
-                if (linkTypes.contains(LinkType.EMAIL)) {
-                    return EMAIL_SCANNER;
-                }
+                return emailScanner;
         }
         return null;
     }
@@ -62,6 +56,7 @@ public class LinkExtractor {
     public static class Builder {
 
         private Set<LinkType> linkTypes = EnumSet.allOf(LinkType.class);
+        private boolean emailDomainMustHaveDot = true;
 
         private Builder() {
         }
@@ -76,10 +71,22 @@ public class LinkExtractor {
         }
 
         /**
+         * @param emailDomainMustHaveDot true if the domain in an email address is required to have more than one part,
+         *                               false if it can also just have single part (e.g. foo@com); true by default
+         * @return this builder
+         */
+        public Builder emailDomainMustHaveDot(boolean emailDomainMustHaveDot) {
+            this.emailDomainMustHaveDot = emailDomainMustHaveDot;
+            return this;
+        }
+
+        /**
          * @return the configured link extractor
          */
         public LinkExtractor build() {
-            return new LinkExtractor(linkTypes);
+            UrlScanner urlScanner = linkTypes.contains(LinkType.URL) ? new UrlScanner() : null;
+            EmailScanner emailScanner = linkTypes.contains(LinkType.EMAIL) ? new EmailScanner(emailDomainMustHaveDot) : null;
+            return new LinkExtractor(urlScanner, emailScanner);
         }
     }
 

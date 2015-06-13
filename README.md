@@ -92,8 +92,8 @@ Not supported:
 * Quoted local parts, e.g. `"this is sparta"@example.com`
 * Address literals, e.g. `foo@[127.0.0.1]`
 
-Note that the domain part can be a single top-level domain (e.g.
-`foo@com`). If this is not wanted, filter the resulting links.
+Note that the domain must have at least one dot (e.g. `foo@com` isn't
+matched), unless the `emailDomainMustHaveDot` option is disabled.
 
 Also see [test cases](src/test/java/org/nibor/autolink/AutolinkEmailTest.java).
 

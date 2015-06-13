@@ -12,11 +12,12 @@ import java.util.EnumSet;
 @RunWith(Parameterized.class)
 public class AutolinkEmailTest extends AutolinkTestCase {
 
-    @Parameters(name = "{1}")
+    @Parameters(name = "{2}")
     public static Iterable<Object[]> data() {
         return Arrays.asList(new Object[][]{
-                {LinkExtractor.builder().linkTypes(EnumSet.of(LinkType.EMAIL)).build(), "email"},
-                {LinkExtractor.builder().build(), "all"}
+                {LinkExtractor.builder().linkTypes(EnumSet.of(LinkType.EMAIL)).build(), true, "email"},
+                {LinkExtractor.builder().build(), true, "all"},
+                {LinkExtractor.builder().emailDomainMustHaveDot(false).build(), false, "all, single part domain"}
         });
     }
 
@@ -24,6 +25,9 @@ public class AutolinkEmailTest extends AutolinkTestCase {
     public LinkExtractor linkExtractor;
 
     @Parameter(1)
+    public boolean domainMustHaveDot;
+
+    @Parameter(2)
     public String description;
 
     @Test
@@ -38,7 +42,6 @@ public class AutolinkEmailTest extends AutolinkTestCase {
 
     @Test
     public void simple() {
-        assertLinked("a@b", "|a@b|");
         assertLinked("foo@example.com", "|foo@example.com|");
         assertLinked("foo.bar@example.com", "|foo.bar@example.com|");
     }
@@ -51,10 +54,10 @@ public class AutolinkEmailTest extends AutolinkTestCase {
 
     @Test
     public void spaceSeparation() {
-        assertLinked("foo a@b", "foo |a@b|");
-        assertLinked("a@b foo", "|a@b| foo");
-        assertLinked("\na@b", "\n|a@b|");
-        assertLinked("a@b\n", "|a@b|\n");
+        assertLinked("foo a@b.com", "foo |a@b.com|");
+        assertLinked("a@b.com foo", "|a@b.com| foo");
+        assertLinked("\na@b.com", "\n|a@b.com|");
+        assertLinked("a@b.com\n", "|a@b.com|\n");
     }
 
     @Test
@@ -75,15 +78,30 @@ public class AutolinkEmailTest extends AutolinkTestCase {
         assertLinked(".foo@example.com", ".|foo@example.com|");
         assertLinked("a..b@example.com", "a..|b@example.com|");
         assertLinked("a@example.com.", "|a@example.com|.");
-        assertLinked("a@b..com", "|a@b|..com");
+    }
+
+    @Test
+    public void domainWithoutDot() {
+        if (domainMustHaveDot) {
+            assertNotLinked("a@b");
+            assertNotLinked("a@b.");
+            assertLinked("a@b.com.", "|a@b.com|.");
+        } else {
+            assertLinked("a@b", "|a@b|");
+            assertLinked("a@b.", "|a@b|.");
+        }
     }
 
     @Test
     public void dashes() {
         assertLinked("a@example.com-", "|a@example.com|-");
         assertLinked("a@foo-bar.com", "|a@foo-bar.com|");
-        assertLinked("a@b-.", "|a@b|-.");
         assertNotLinked("a@-foo.com");
+        if (domainMustHaveDot) {
+            assertNotLinked("a@b-.");
+        } else {
+            assertLinked("a@b-.", "|a@b|-.");
+        }
     }
 
     @Test
