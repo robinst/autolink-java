@@ -8,6 +8,19 @@ Inspired by [Rinku](https://github.com/vmg/rinku). Similar to it, regular
 expressions are not used. Instead, the input text is parsed in one pass with
 limited backtracking.
 
+This library requires Java 7. It has no external dependencies. Maven coordinates
+(see
+[here](https://search.maven.org/#artifactdetails|org.nibor.autolink|autolink|0.2.0|jar)
+for other build systems):
+
+```xml
+<dependency>
+    <groupId>org.nibor.autolink</groupId>
+    <artifactId>autolink</artifactId>
+    <version>0.2.0</version>
+</dependency>
+```
+
 [![Build status](https://travis-ci.org/robinst/autolink-java.svg?branch=master)](https://travis-ci.org/robinst/autolink-java)
 
 Usage
