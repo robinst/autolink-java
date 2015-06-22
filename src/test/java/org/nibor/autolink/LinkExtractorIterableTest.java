@@ -35,6 +35,12 @@ public class LinkExtractorIterableTest {
         iterator.next();
     }
 
+    @Test(expected = UnsupportedOperationException.class)
+    public void removeUnsupported() {
+        Iterable<LinkSpan> iterable = getSingleElementIterable();
+        iterable.iterator().remove();
+    }
+
     private Iterable<LinkSpan> getSingleElementIterable() {
         String input = "foo http://example.com";
         return LinkExtractor.builder().build().extractLinks(input);
