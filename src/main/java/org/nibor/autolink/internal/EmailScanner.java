@@ -5,7 +5,7 @@ import org.nibor.autolink.LinkType;
 
 /**
  * Scan for email address starting from the trigger character "@".
- * <p/>
+ * <p>
  * Based on RFC 6531, but also scans invalid IDN. Doesn't match IP address in domain part or quoting in local part.
  */
 public class EmailScanner implements Scanner {

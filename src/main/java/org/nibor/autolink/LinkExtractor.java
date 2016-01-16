@@ -8,7 +8,7 @@ import java.util.*;
 
 /**
  * Extracts links from input.
- * <p/>
+ * <p>
  * Create and configure an extractor using {@link #builder()}, then call {@link #extractLinks}.
  */
 public class LinkExtractor {
