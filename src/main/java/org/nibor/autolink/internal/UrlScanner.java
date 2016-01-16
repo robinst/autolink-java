@@ -31,13 +31,21 @@ public class UrlScanner implements Scanner {
     // See "scheme" in RFC 3986
     private int findFirst(CharSequence input, int beginIndex, int rewindIndex) {
         int first = -1;
+        int digit = -1;
         for (int i = beginIndex; i >= rewindIndex; i--) {
             char c = input.charAt(i);
             if (Scanners.isAlpha(c)) {
                 first = i;
-            } else if (!schemeNonAlpha(c)) {
+            } else if (Scanners.isDigit(c)) {
+                digit = i;
+            } else if (!schemeSpecial(c)) {
                 break;
             }
+        }
+        if (first > 0 && first - 1 == digit) {
+            // We don't want to extract "abc://foo" out of "1abc://foo".
+            // ".abc://foo" and others are ok though, as they feel more like separators.
+            first = -1;
         }
         return first;
     }
@@ -101,14 +109,13 @@ public class UrlScanner implements Scanner {
         return last;
     }
 
-    private boolean schemeNonAlpha(char c) {
+    private static boolean schemeSpecial(char c) {
         switch (c) {
             case '+':
             case '-':
             case '.':
                 return true;
         }
-        return Scanners.isDigit(c);
+        return false;
     }
-
 }

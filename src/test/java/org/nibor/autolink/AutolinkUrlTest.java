@@ -45,8 +45,10 @@ public class AutolinkUrlTest extends AutolinkTestCase {
         assertNotLinked("+://foo");
         assertNotLinked("-://foo");
         assertNotLinked(".://foo");
+        assertNotLinked("1abc://foo");
         assertLinked("a://foo", "|a://foo|");
         assertLinked("a123://foo", "|a123://foo|");
+        assertLinked("a123b://foo", "|a123b://foo|");
         assertLinked("a+b://foo", "|a+b://foo|");
         assertLinked("a-b://foo", "|a-b://foo|");
         assertLinked("a.b://foo", "|a.b://foo|");
