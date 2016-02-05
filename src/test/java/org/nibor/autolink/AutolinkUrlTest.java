@@ -87,6 +87,7 @@ public class AutolinkUrlTest extends AutolinkTestCase {
         assertLinked("http://example.org/:", "|http://example.org/|:");
         assertLinked("http://example.org/?", "|http://example.org/|?");
         assertLinked("http://example.org/!", "|http://example.org/|!");
+        assertLinked("http://example.org/;", "|http://example.org/|;");
     }
 
     @Test
@@ -94,6 +95,7 @@ public class AutolinkUrlTest extends AutolinkTestCase {
         assertLinked("http://example.org/a(b)", "|http://example.org/a(b)|");
         assertLinked("http://example.org/a[b]", "|http://example.org/a[b]|");
         assertLinked("http://example.org/a{b}", "|http://example.org/a{b}|");
+        assertLinked("http://example.org/a<b>", "|http://example.org/a<b>|");
         assertLinked("http://example.org/a\"b\"", "|http://example.org/a\"b\"|");
         assertLinked("http://example.org/a'b'", "|http://example.org/a'b'|");
         assertLinked("(http://example.org/)", "(|http://example.org/|)");
@@ -110,9 +112,31 @@ public class AutolinkUrlTest extends AutolinkTestCase {
         assertLinked("[(http://example.org/)]", "[(|http://example.org/|)]");
         assertLinked("(http://example.org/).", "(|http://example.org/|).");
         assertLinked("(http://example.org/.)", "(|http://example.org/|.)");
+        assertLinked("http://example.org/>", "|http://example.org/|>");
         // not sure about these:
         assertLinked("http://example.org/(", "|http://example.org/(|");
         assertLinked("http://example.org/]()", "|http://example.org/|]()");
+    }
+
+    @Test
+    public void html() {
+        assertLinked("http://example.org\">", "|http://example.org|\">");
+        assertLinked("http://example.org'>", "|http://example.org|'>");
+        assertLinked("http://example.org\"/>", "|http://example.org|\"/>");
+        assertLinked("http://example.org'/>", "|http://example.org|'/>");
+    }
+
+    @Test
+    public void css() {
+        assertLinked("http://example.org\");", "|http://example.org|\");");
+        assertLinked("http://example.org');", "|http://example.org|');");
+    }
+
+    @Test
+    public void slash() {
+        assertLinked("http://example.org/", "|http://example.org/|");
+        assertLinked("http://example.org/a/", "|http://example.org/a/|");
+        assertLinked("http://example.org//", "|http://example.org//|");
     }
 
     @Test

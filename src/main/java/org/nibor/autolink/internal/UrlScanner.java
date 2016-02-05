@@ -54,6 +54,7 @@ public class UrlScanner implements Scanner {
         int round = 0;
         int square = 0;
         int curly = 0;
+        int angle = 0;
         boolean doubleQuote = false;
         boolean singleQuote = false;
         int last = beginIndex;
@@ -67,13 +68,22 @@ public class UrlScanner implements Scanner {
                 case '\u000B':
                 case '\f':
                 case '\r':
+                    // These can never be part of an URL, so stop now
                     break loop;
                 case '?':
                 case '!':
                 case '.':
                 case ',':
                 case ':':
+                case ';':
+                    // These may be part of an URL but not at the end
                     continue loop;
+                case '/':
+                    // This may be part of an URL and at the end, but not if the previous character can't be the end of an URL
+                    if (last != i - 1) {
+                        continue loop;
+                    }
+                    break;
                 case '(':
                     round++;
                     break;
@@ -92,6 +102,12 @@ public class UrlScanner implements Scanner {
                 case '}':
                     curly--;
                     break;
+                case '<':
+                    angle++;
+                    break;
+                case '>':
+                    angle--;
+                    break;
                 case '"':
                     doubleQuote = !doubleQuote;
                     break;
@@ -102,7 +118,7 @@ public class UrlScanner implements Scanner {
                     last = i;
                     continue loop;
             }
-            if (round >= 0 && square >= 0 && curly >= 0 && !doubleQuote && !singleQuote) {
+            if (round >= 0 && square >= 0 && curly >= 0 && angle >= 0 && !doubleQuote && !singleQuote) {
                 last = i;
             }
         }
