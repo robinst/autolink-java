@@ -66,7 +66,10 @@ public class LinkExtractor {
          * @return this builder
          */
         public Builder linkTypes(Set<LinkType> linkTypes) {
-            this.linkTypes = new HashSet<>(Objects.requireNonNull(linkTypes, "linkTypes must not be null"));
+            if (linkTypes == null) {
+                throw new NullPointerException("linkTypes must not be null");
+            }
+            this.linkTypes = new HashSet<>(linkTypes);
             return this;
         }
 
