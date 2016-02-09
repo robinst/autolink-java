@@ -77,11 +77,11 @@ public class UrlScanner implements Scanner {
                 case ':':
                 case ';':
                     // These may be part of an URL but not at the end
-                    continue loop;
+                    break;
                 case '/':
                     // This may be part of an URL and at the end, but not if the previous character can't be the end of an URL
-                    if (last != i - 1) {
-                        continue loop;
+                    if (last == i - 1) {
+                        last = i;
                     }
                     break;
                 case '(':
@@ -89,37 +89,63 @@ public class UrlScanner implements Scanner {
                     break;
                 case ')':
                     round--;
+                    if (round >= 0) {
+                        last = i;
+                    } else {
+                        // More closing than opening brackets, stop now
+                        break loop;
+                    }
                     break;
                 case '[':
                     square++;
                     break;
                 case ']':
                     square--;
+                    if (square >= 0) {
+                        last = i;
+                    } else {
+                        // More closing than opening brackets, stop now
+                        break loop;
+                    }
                     break;
                 case '{':
                     curly++;
                     break;
                 case '}':
                     curly--;
+                    if (curly >= 0) {
+                        last = i;
+                    } else {
+                        // More closing than opening brackets, stop now
+                        break loop;
+                    }
                     break;
                 case '<':
                     angle++;
                     break;
                 case '>':
                     angle--;
+                    if (angle >= 0) {
+                        last = i;
+                    } else {
+                        // More closing than opening brackets, stop now
+                        break loop;
+                    }
                     break;
                 case '"':
                     doubleQuote = !doubleQuote;
+                    if (!doubleQuote) {
+                        last = i;
+                    }
                     break;
                 case '\'':
                     singleQuote = !singleQuote;
+                    if (!singleQuote) {
+                        last = i;
+                    }
                     break;
                 default:
                     last = i;
-                    continue loop;
-            }
-            if (round >= 0 && square >= 0 && curly >= 0 && angle >= 0 && !doubleQuote && !singleQuote) {
-                last = i;
             }
         }
         return last;

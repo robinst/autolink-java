@@ -113,9 +113,21 @@ public class AutolinkUrlTest extends AutolinkTestCase {
         assertLinked("(http://example.org/).", "(|http://example.org/|).");
         assertLinked("(http://example.org/.)", "(|http://example.org/|.)");
         assertLinked("http://example.org/>", "|http://example.org/|>");
-        // not sure about these:
-        assertLinked("http://example.org/(", "|http://example.org/(|");
+        // not sure about these
+        assertLinked("http://example.org/(", "|http://example.org/|(");
+        assertLinked("http://example.org/(.", "|http://example.org/|(.");
         assertLinked("http://example.org/]()", "|http://example.org/|]()");
+    }
+
+    @Test
+    public void quotes() {
+        assertLinked("http://example.org/\"_(foo)", "|http://example.org/\"_(foo)|");
+        assertLinked("http://example.org/\"_(foo)\"", "|http://example.org/\"_(foo)\"|");
+        assertLinked("http://example.org/\"\"", "|http://example.org/\"\"|");
+        assertLinked("http://example.org/\"\"\"", "|http://example.org/\"\"|\"");
+        assertLinked("http://example.org/\".", "|http://example.org/|\".");
+        assertLinked("http://example.org/\"a", "|http://example.org/\"a|");
+        assertLinked("http://example.org/it's", "|http://example.org/it's|");
     }
 
     @Test
@@ -143,6 +155,7 @@ public class AutolinkUrlTest extends AutolinkTestCase {
     public void multiple() {
         assertLinked("http://one.org/ http://two.org/", "|http://one.org/| |http://two.org/|");
         assertLinked("http://one.org/ : http://two.org/", "|http://one.org/| : |http://two.org/|");
+        assertLinked("(http://one.org/)(http://two.org/)", "(|http://one.org/|)(|http://two.org/|)");
     }
 
     @Test
