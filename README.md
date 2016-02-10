@@ -10,14 +10,14 @@ limited backtracking.
 
 This library requires Java 7. It has no external dependencies. Maven coordinates
 (see
-[here](https://search.maven.org/#artifactdetails|org.nibor.autolink|autolink|0.2.0|jar)
+[here](https://search.maven.org/#artifactdetails|org.nibor.autolink|autolink|0.4.0|jar)
 for other build systems):
 
 ```xml
 <dependency>
     <groupId>org.nibor.autolink</groupId>
     <artifactId>autolink</artifactId>
-    <version>0.2.0</version>
+    <version>0.4.0</version>
 </dependency>
 ```
 
