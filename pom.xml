@@ -50,7 +50,7 @@
             <plugin>
                 <groupId>com.github.siom79.japicmp</groupId>
                 <artifactId>japicmp-maven-plugin</artifactId>
-                <version>0.6.2</version>
+                <version>0.7.0</version>
                 <configuration>
                     <oldVersion>
                         <dependency>
@@ -70,8 +70,8 @@
                             <exclude>*.internal.*</exclude>
                         </excludes>
                         <accessModifier>public</accessModifier>
-                        <breakBuildOnModifications>true</breakBuildOnModifications>
                         <breakBuildOnBinaryIncompatibleModifications>true</breakBuildOnBinaryIncompatibleModifications>
+                        <breakBuildOnSourceIncompatibleModifications>true</breakBuildOnSourceIncompatibleModifications>
                         <onlyModified>true</onlyModified>
                         <onlyBinaryIncompatible>false</onlyBinaryIncompatible>
                         <includeSynthetic>false</includeSynthetic>
