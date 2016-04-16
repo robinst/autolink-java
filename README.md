@@ -8,7 +8,9 @@ Inspired by [Rinku](https://github.com/vmg/rinku). Similar to it, regular
 expressions are not used. Instead, the input text is parsed in one pass with
 limited backtracking.
 
-This library requires Java 7. It has no external dependencies. Maven coordinates
+This library requires Java 7. It works on Android (minimum API level 15). It has no external dependencies.
+
+Maven coordinates
 (see
 [here](https://search.maven.org/#artifactdetails|org.nibor.autolink|autolink|0.4.0|jar)
 for other build systems):
