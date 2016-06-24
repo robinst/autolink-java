@@ -66,6 +66,8 @@ public class AutolinkUrlTest extends AutolinkTestCase {
         assertLinked("http://example.org/", "|http://example.org/|");
         assertLinked("http://example.org/123", "|http://example.org/123|");
         assertLinked("http://example.org/?foo=test&bar=123", "|http://example.org/?foo=test&bar=123|");
+        assertLinked("http://example.org/?foo=%20", "|http://example.org/?foo=%20|");
+        assertLinked("http://example.org/%3C", "|http://example.org/%3C|");
     }
 
     @Test
@@ -74,13 +76,29 @@ public class AutolinkUrlTest extends AutolinkTestCase {
     }
 
     @Test
-    public void spaceSeparation() {
+    public void spaceCharactersStopUrl() {
         assertLinked("foo http://example.org/", "foo |http://example.org/|");
         assertLinked("http://example.org/ bar", "|http://example.org/| bar");
+        assertLinked("http://example.org/\tbar", "|http://example.org/|\tbar");
+        assertLinked("http://example.org/\nbar", "|http://example.org/|\nbar");
+        assertLinked("http://example.org/\u000Bbar", "|http://example.org/|\u000Bbar");
+        assertLinked("http://example.org/\fbar", "|http://example.org/|\fbar");
+        assertLinked("http://example.org/\rbar", "|http://example.org/|\rbar");
     }
 
     @Test
-    public void delimiterSeparation() {
+    public void illegalCharactersStopUrl() {
+        assertLinked("http://example.org/<", "|http://example.org/|<");
+        assertLinked("http://example.org/>", "|http://example.org/|>");
+        assertLinked("http://example.org/<>", "|http://example.org/|<>");
+        assertLinked("http://example.org/\u0000", "|http://example.org/|\u0000");
+        assertLinked("http://example.org/\u000E", "|http://example.org/|\u000E");
+        assertLinked("http://example.org/\u007F", "|http://example.org/|\u007F");
+        assertLinked("http://example.org/\u009F", "|http://example.org/|\u009F");
+    }
+
+    @Test
+    public void delimiterAtEnd() {
         assertLinked("http://example.org/.", "|http://example.org/|.");
         assertLinked("http://example.org/..", "|http://example.org/|..");
         assertLinked("http://example.org/,", "|http://example.org/|,");
@@ -95,7 +113,6 @@ public class AutolinkUrlTest extends AutolinkTestCase {
         assertLinked("http://example.org/a(b)", "|http://example.org/a(b)|");
         assertLinked("http://example.org/a[b]", "|http://example.org/a[b]|");
         assertLinked("http://example.org/a{b}", "|http://example.org/a{b}|");
-        assertLinked("http://example.org/a<b>", "|http://example.org/a<b>|");
         assertLinked("http://example.org/a\"b\"", "|http://example.org/a\"b\"|");
         assertLinked("http://example.org/a'b'", "|http://example.org/a'b'|");
         assertLinked("(http://example.org/)", "(|http://example.org/|)");
@@ -136,6 +153,8 @@ public class AutolinkUrlTest extends AutolinkTestCase {
         assertLinked("http://example.org'>", "|http://example.org|'>");
         assertLinked("http://example.org\"/>", "|http://example.org|\"/>");
         assertLinked("http://example.org'/>", "|http://example.org|'/>");
+        assertLinked("http://example.org<p>", "|http://example.org|<p>");
+        assertLinked("http://example.org</p>", "|http://example.org|</p>");
     }
 
     @Test
@@ -161,6 +180,8 @@ public class AutolinkUrlTest extends AutolinkTestCase {
     @Test
     public void international() {
         assertLinked("http://üñîçøðé.com/ä", "|http://üñîçøðé.com/ä|");
+        assertLinked("http://example.org/\u00A1", "|http://example.org/\u00A1|");
+        assertLinked("http://example.org/\u00A2", "|http://example.org/\u00A2|");
     }
 
     @Test

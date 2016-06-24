@@ -54,7 +54,6 @@ public class UrlScanner implements Scanner {
         int round = 0;
         int square = 0;
         int curly = 0;
-        int angle = 0;
         boolean doubleQuote = false;
         boolean singleQuote = false;
         int last = beginIndex;
@@ -62,13 +61,79 @@ public class UrlScanner implements Scanner {
         for (int i = beginIndex; i < input.length(); i++) {
             char c = input.charAt(i);
             switch (c) {
-                case ' ':
+                case '\u0000':
+                case '\u0001':
+                case '\u0002':
+                case '\u0003':
+                case '\u0004':
+                case '\u0005':
+                case '\u0006':
+                case '\u0007':
+                case '\u0008':
                 case '\t':
                 case '\n':
                 case '\u000B':
                 case '\f':
                 case '\r':
-                    // These can never be part of an URL, so stop now
+                case '\u000E':
+                case '\u000F':
+                case '\u0010':
+                case '\u0011':
+                case '\u0012':
+                case '\u0013':
+                case '\u0014':
+                case '\u0015':
+                case '\u0016':
+                case '\u0017':
+                case '\u0018':
+                case '\u0019':
+                case '\u001A':
+                case '\u001B':
+                case '\u001C':
+                case '\u001D':
+                case '\u001E':
+                case '\u001F':
+                case ' ':
+                case '<':
+                case '>':
+                case '\u007F':
+                case '\u0080':
+                case '\u0081':
+                case '\u0082':
+                case '\u0083':
+                case '\u0084':
+                case '\u0085':
+                case '\u0086':
+                case '\u0087':
+                case '\u0088':
+                case '\u0089':
+                case '\u008A':
+                case '\u008B':
+                case '\u008C':
+                case '\u008D':
+                case '\u008E':
+                case '\u008F':
+                case '\u0090':
+                case '\u0091':
+                case '\u0092':
+                case '\u0093':
+                case '\u0094':
+                case '\u0095':
+                case '\u0096':
+                case '\u0097':
+                case '\u0098':
+                case '\u0099':
+                case '\u009A':
+                case '\u009B':
+                case '\u009C':
+                case '\u009D':
+                case '\u009E':
+                case '\u009F':
+                    // These can never be part of an URL, so stop now. See RFC 3986 and RFC 3987.
+                    // Some characters are not in the above list, even they are not in "unreserved" or "reserved":
+                    //   '"', '\\', '^', '`', '{', '|', '}'
+                    // The reason for this is that other link detectors also allow them. Also see below, we require
+                    // the quote and the braces to be balanced.
                     break loop;
                 case '?':
                 case '!':
@@ -97,9 +162,11 @@ public class UrlScanner implements Scanner {
                     }
                     break;
                 case '[':
+                    // Allowed in IPv6 address host
                     square++;
                     break;
                 case ']':
+                    // Allowed in IPv6 address host
                     square--;
                     if (square >= 0) {
                         last = i;
@@ -114,18 +181,6 @@ public class UrlScanner implements Scanner {
                 case '}':
                     curly--;
                     if (curly >= 0) {
-                        last = i;
-                    } else {
-                        // More closing than opening brackets, stop now
-                        break loop;
-                    }
-                    break;
-                case '<':
-                    angle++;
-                    break;
-                case '>':
-                    angle--;
-                    if (angle >= 0) {
                         last = i;
                     } else {
                         // More closing than opening brackets, stop now
