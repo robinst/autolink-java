@@ -25,6 +25,7 @@ for other build systems):
 
 [![Build status](https://travis-ci.org/robinst/autolink-java.svg?branch=master)](https://travis-ci.org/robinst/autolink-java)
 [![Coverage status](https://coveralls.io/repos/github/robinst/autolink-java/badge.svg?branch=master)](https://coveralls.io/github/robinst/autolink-java?branch=master)
+[![Maven Central status](https://img.shields.io/maven-central/v/org.nibor.autolink/autolink.svg)](https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.nibor.autolink%22%20AND%20a%3A%22autolink%22)
 
 
 Usage
