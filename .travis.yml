@@ -2,3 +2,8 @@ language: java
 jdk:
   - openjdk7
   - oraclejdk8
+deploy:
+  provider: script
+  script: mvn clean test jacoco:report coveralls:report -Pcoverage
+  on:
+    jdk: oraclejdk8
