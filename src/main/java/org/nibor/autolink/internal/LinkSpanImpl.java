@@ -8,11 +8,13 @@ public class LinkSpanImpl implements LinkSpan {
     private final LinkType linkType;
     private final int beginIndex;
     private final int endIndex;
+    private final CharSequence sequence;
 
-    public LinkSpanImpl(LinkType linkType, int beginIndex, int endIndex) {
+    public LinkSpanImpl(LinkType linkType, int beginIndex, int endIndex, CharSequence sequence) {
         this.linkType = linkType;
         this.beginIndex = beginIndex;
         this.endIndex = endIndex;
+        this.sequence = sequence;
     }
 
     @Override
@@ -28,6 +30,11 @@ public class LinkSpanImpl implements LinkSpan {
     @Override
     public int getEndIndex() {
         return endIndex;
+    }
+    
+    @Override
+    public CharSequence sequence() {
+        return sequence;
     }
 
     @Override

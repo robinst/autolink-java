@@ -12,6 +12,7 @@ public class AutolinkBenchmark extends AutolinkTestCase {
     private static final List<String> WORDS = Arrays.asList(
             "Lorem ", "ipsum ", "dolor ", "sit ", "amet ", "consectetur ", "adipiscing ", "elit ",
             ".", ",", ":", "@", "(", ")", "http://example.com", "https://test.com/foo_(bar)",
+            "www.something.com", "www.another.uk.co",
             "foo.bar@example.com", "foo+bar@test.com"
     );
 

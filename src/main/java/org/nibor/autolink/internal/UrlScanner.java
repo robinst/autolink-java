@@ -23,13 +23,13 @@ public class UrlScanner implements Scanner {
             return null;
         }
 
-        int last = findLast(input, afterSlashSlash);
+        int last = findLast(input, afterSlashSlash) + 1;
 
-        return new LinkSpanImpl(LinkType.URL, first, last + 1);
+        return new LinkSpanImpl(LinkType.URL, first, last, input.subSequence(first, last));
     }
 
     // See "scheme" in RFC 3986
-    private int findFirst(CharSequence input, int beginIndex, int rewindIndex) {
+    protected int findFirst(CharSequence input, int beginIndex, int rewindIndex) {
         int first = -1;
         int digit = -1;
         for (int i = beginIndex; i >= rewindIndex; i--) {
@@ -50,7 +50,7 @@ public class UrlScanner implements Scanner {
         return first;
     }
 
-    private int findLast(CharSequence input, int beginIndex) {
+    protected int findLast(CharSequence input, int beginIndex) {
         int round = 0;
         int square = 0;
         int curly = 0;

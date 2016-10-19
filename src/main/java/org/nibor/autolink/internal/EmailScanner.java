@@ -25,12 +25,12 @@ public class EmailScanner implements Scanner {
         }
 
         int afterAt = triggerIndex + 1;
-        int last = findLast(input, afterAt);
-        if (last == -1) {
+        int last = findLast(input, afterAt) + 1;
+        if (last == 0) {
             return null;
         }
 
-        return new LinkSpanImpl(LinkType.EMAIL, first, last + 1);
+        return new LinkSpanImpl(LinkType.EMAIL, first, last, input.subSequence(first, last));
     }
 
     // See "Local-part" in RFC 5321, plus extensions in RFC 6531
