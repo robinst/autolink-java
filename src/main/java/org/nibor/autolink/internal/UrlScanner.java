@@ -23,7 +23,7 @@ public class UrlScanner implements Scanner {
             return null;
         }
 
-        int last = Scanners.findLast(input, afterSlashSlash);
+        int last = Scanners.findUrlEnd(input, afterSlashSlash);
 
         return new LinkSpanImpl(LinkType.URL, first, last + 1 );
     }
