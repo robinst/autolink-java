@@ -195,7 +195,7 @@ public class AutolinkUrlTest extends AutolinkTestCase {
         return linkExtractor;
     }
 
-    private void assertLinked(String input, String expected) {
+    protected void assertLinked(String input, String expected) {
         super.assertLinked(input, expected, LinkType.URL);
     }
 }

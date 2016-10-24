@@ -10,12 +10,12 @@ import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
 @RunWith(Parameterized.class)
-public class AutolinkWwwUrlTest extends AutolinkUrlTest {
+public class AutolinkWwwUrlTest extends AutolinkTestCase {
 
     @Parameters(name = "{1}")
     public static Iterable<Object[]> data() {
         return Arrays.asList(new Object[][]{
-                {LinkExtractor.builder().linkTypes(EnumSet.of(LinkType.URL)).build(), "URL"},
+                {LinkExtractor.builder().linkTypes(EnumSet.of(LinkType.WWW)).build(), "WWW"},
                 {LinkExtractor.builder().build(), "all"}
         });
     }
@@ -41,12 +41,26 @@ public class AutolinkWwwUrlTest extends AutolinkUrlTest {
         assertLinked("www.s.com","|www.s.com|");
         assertLinked("www.fo.uk","|www.fo.uk|");
     }
-
+    
     @Test
-    public void schemes() {
-        assertLinked("http://www.something.com","|http://www.something.com|");
-        assertLinked("http://something.com","|http://something.com|");
-        assertLinked("http://something.co.uk","|http://something.co.uk|");
+    public void html() {
+        assertLinked("<a href=\"somelink\">www.example.org</a>", "<a href=\"somelink\">|www.example.org|</a>");
+        assertLinked("<a href=\"www.example.org\">sometext</a>", "<a href=\"|www.example.org|\">sometext</a>");
+        assertLinked("<p>www.example.org</p>", "<p>|www.example.org|</p>");
+    }
+    
+    @Test
+    public void multiple() {
+        assertLinked("www.one.org/ www.two.org/", "|www.one.org/| |www.two.org/|");
+        assertLinked("www.one.org/ : www.two.org/", "|www.one.org/| : |www.two.org/|");
+        assertLinked("(www.one.org/)(www.two.org/)", "(|www.one.org/|)(|www.two.org/|)");
+    }
+    
+    @Test
+    public void international() {
+        assertLinked("www.üñîçøðé.com/ä", "|www.üñîçøðé.com/ä|");
+        assertLinked("www.example.org/\u00A1", "|www.example.org/\u00A1|");
+        assertLinked("www.example.org/\u00A2", "|www.example.org/\u00A2|");
     }
 
     @Override
@@ -55,6 +69,6 @@ public class AutolinkWwwUrlTest extends AutolinkUrlTest {
     }
 
     private void assertLinked(String input, String expected) {
-        super.assertLinked(input, expected, LinkType.URL);
+        super.assertLinked(input, expected, LinkType.WWW);
     }
 }
