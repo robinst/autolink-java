@@ -11,5 +11,9 @@ public enum LinkType {
     /**
      * Email address such as {@code foo@example.com}
      */
-    EMAIL
+    EMAIL,
+    /**
+     * URL such as {@code www.example.com}
+     */
+    WWW
 }

@@ -21,8 +21,4 @@ public interface LinkSpan {
      */
     int getEndIndex();
 
-    /**
-     * @return the found sequence
-     */
-    CharSequence sequence();
 }

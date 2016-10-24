@@ -8,7 +8,7 @@ import org.nibor.autolink.LinkType;
  * <p>
  * Based on RFC 3986.
  */
-public class WwwUrlScanner extends UrlScanner {
+public class WwwUrlScanner implements Scanner {
 
     @Override
     public LinkSpan scan(final CharSequence input, int triggerIndex, int rewindIndex) {
@@ -18,17 +18,16 @@ public class WwwUrlScanner extends UrlScanner {
         }
 
         int first = triggerIndex;
-        int last = findLast(input, afterDot) + 1;
-        if (last == 0) {
+        int last = findLast(input, afterDot);
+        if (last == -1) {
             return null;
         }
 
-        return new LinkSpanImpl(LinkType.URL, first, last, input.subSequence(first, last));
+        return new LinkSpanImpl(LinkType.WWW, first, last + 1);
     }
     
-    @Override
-    protected int findLast(CharSequence input, int beginIndex) {
-        int last = super.findLast(input, beginIndex);
+    private int findLast(CharSequence input, int beginIndex) {
+        int last = Scanners.findLast(input, beginIndex);
         
         // Make sure there is at least one dot after the first dot,
         // so www.something is not allowed, but www.something.co.uk is

@@ -93,7 +93,7 @@ public class LinkExtractor {
          */
         public LinkExtractor build() {
             UrlScanner urlScanner = linkTypes.contains(LinkType.URL) ? new UrlScanner() : null;
-            WwwUrlScanner wwwScanner = linkTypes.contains(LinkType.URL) ? new WwwUrlScanner() : null;
+            WwwUrlScanner wwwScanner = linkTypes.contains(LinkType.WWW) ? new WwwUrlScanner() : null;
             EmailScanner emailScanner = linkTypes.contains(LinkType.EMAIL) ? new EmailScanner(emailDomainMustHaveDot) : null;
             return new LinkExtractor(urlScanner, wwwScanner, emailScanner);
         }
