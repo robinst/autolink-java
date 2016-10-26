@@ -34,12 +34,19 @@ public class AutolinkWwwUrlTest extends AutolinkTestCase {
         assertNotLinked("w.bar.foo.co");
         assertNotLinked("www.something");
         assertNotLinked("www.go");
+        assertNotLinked("foo.www.fo.uk");
+        assertNotLinked("www..com");
+        assertNotLinked("wwww.toomany.com");
     }
     
     @Test
     public void linked() {
         assertLinked("www.s.com","|www.s.com|");
         assertLinked("www.fo.uk","|www.fo.uk|");
+        assertLinked("foo:www.fo.uk","foo:|www.fo.uk|");
+        assertLinked("foo-www.fo.uk","foo-|www.fo.uk|");
+        assertLinked("WWW.s.com","|WWW.s.com|");
+        assertLinked("Www.s.com","|Www.s.com|");
     }
     
     @Test

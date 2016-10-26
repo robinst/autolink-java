@@ -12,12 +12,16 @@ public class WwwUrlScanner implements Scanner {
 
     @Override
     public LinkSpan scan(final CharSequence input, int triggerIndex, int rewindIndex) {
-        int afterDot = triggerIndex + 4;
-        if (afterDot >= input.length() || input.charAt(triggerIndex + 1) != 'w' || input.charAt(triggerIndex + 2) != 'w' || input.charAt(triggerIndex + 3) != '.') {
+        final int afterDot = triggerIndex + 4;
+        if (afterDot >= input.length() || !isWWW(input, triggerIndex)) {
             return null;
         }
 
-        int first = triggerIndex;
+        final int first = findFirst(input, triggerIndex, rewindIndex);
+        if (first == -1) {
+            return null;
+        }
+        
         int last = findLast(input, afterDot);
         if (last == -1) {
             return null;
@@ -26,8 +30,21 @@ public class WwwUrlScanner implements Scanner {
         return new LinkSpanImpl(LinkType.WWW, first, last + 1);
     }
     
-    private int findLast(CharSequence input, int beginIndex) {
-        int last = Scanners.findUrlEnd(input, beginIndex);
+    private static final int findFirst(final CharSequence input, final int beginIndex, final int rewindIndex) {
+        if (beginIndex == rewindIndex) {
+            return beginIndex;
+        }
+        
+        // Is the character before www. allowed?
+        if (isAllowed(input.charAt(beginIndex - 1))) {
+            return beginIndex;
+        }
+        
+        return -1;
+    }
+    
+    private static final int findLast(final CharSequence input, final int beginIndex) {
+        final int last = Scanners.findUrlEnd(input, beginIndex);
         
         // Make sure there is at least one dot after the first dot,
         // so www.something is not allowed, but www.something.co.uk is
@@ -37,5 +54,16 @@ public class WwwUrlScanner implements Scanner {
         }
         
         return -1;
+    }
+    
+    private static final boolean isAllowed(char c) {
+        return c != '.' && !Scanners.isAlnum(c);
+    }
+    
+    private static final boolean isWWW(final CharSequence input, final int triggerIndex) {
+        return 
+                (input.charAt(triggerIndex + 1) == 'w' || input.charAt(triggerIndex + 1) == 'W')
+             && (input.charAt(triggerIndex + 2) == 'w' || input.charAt(triggerIndex + 2) == 'W')
+             &&  input.charAt(triggerIndex + 3) == '.';
     }
 }

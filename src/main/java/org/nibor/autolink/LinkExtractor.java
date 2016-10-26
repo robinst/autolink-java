@@ -50,6 +50,7 @@ public class LinkExtractor {
             case '@':
                 return emailScanner;
             case 'w':
+            case 'W':
                 return wwwScanner;
         }
         return null;
