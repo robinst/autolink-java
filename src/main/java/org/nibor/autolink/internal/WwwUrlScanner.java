@@ -62,8 +62,8 @@ public class WwwUrlScanner implements Scanner {
     
     private static final boolean isWWW(final CharSequence input, final int triggerIndex) {
         return 
-                (input.charAt(triggerIndex + 1) == 'w' || input.charAt(triggerIndex + 1) == 'W')
-             && (input.charAt(triggerIndex + 2) == 'w' || input.charAt(triggerIndex + 2) == 'W')
+                (input.charAt(triggerIndex + 1) == 'w')
+             && (input.charAt(triggerIndex + 2) == 'w')
              &&  input.charAt(triggerIndex + 3) == '.';
     }
 }

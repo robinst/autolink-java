@@ -45,8 +45,6 @@ public class AutolinkWwwUrlTest extends AutolinkTestCase {
         assertLinked("www.fo.uk","|www.fo.uk|");
         assertLinked("foo:www.fo.uk","foo:|www.fo.uk|");
         assertLinked("foo-www.fo.uk","foo-|www.fo.uk|");
-        assertLinked("WWW.s.com","|WWW.s.com|");
-        assertLinked("Www.s.com","|Www.s.com|");
     }
     
     @Test
