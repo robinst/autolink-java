@@ -16,7 +16,7 @@ public class AutolinkEmailTest extends AutolinkTestCase {
     public static Iterable<Object[]> data() {
         return Arrays.asList(new Object[][]{
                 {LinkExtractor.builder().linkTypes(EnumSet.of(LinkType.EMAIL)).build(), true, "email"},
-                {LinkExtractor.builder().build(), true, "all"},
+                {LinkExtractor.builder().linkTypes(EnumSet.allOf(LinkType.class)).build(), true, "all"},
                 {LinkExtractor.builder().emailDomainMustHaveDot(false).build(), false, "all, single part domain"}
         });
     }

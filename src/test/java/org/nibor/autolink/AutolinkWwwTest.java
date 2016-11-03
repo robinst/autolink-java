@@ -1,13 +1,13 @@
 package org.nibor.autolink;
 
-import java.util.Arrays;
-import java.util.EnumSet;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
+
+import java.util.Arrays;
+import java.util.EnumSet;
 
 @RunWith(Parameterized.class)
 public class AutolinkWwwTest extends AutolinkTestCase {
@@ -16,7 +16,7 @@ public class AutolinkWwwTest extends AutolinkTestCase {
     public static Iterable<Object[]> data() {
         return Arrays.asList(new Object[][]{
                 {LinkExtractor.builder().linkTypes(EnumSet.of(LinkType.WWW)).build(), "WWW"},
-                {LinkExtractor.builder().build(), "all"}
+                {LinkExtractor.builder().linkTypes(EnumSet.allOf(LinkType.class)).build(), "all"}
         });
     }
 
@@ -38,29 +38,29 @@ public class AutolinkWwwTest extends AutolinkTestCase {
         assertNotLinked("www..com");
         assertNotLinked("wwww.toomany.com");
     }
-    
+
     @Test
     public void linked() {
-        assertLinked("www.s.com","|www.s.com|");
-        assertLinked("www.fo.uk","|www.fo.uk|");
-        assertLinked("foo:www.fo.uk","foo:|www.fo.uk|");
-        assertLinked("foo-www.fo.uk","foo-|www.fo.uk|");
+        assertLinked("www.s.com", "|www.s.com|");
+        assertLinked("www.fo.uk", "|www.fo.uk|");
+        assertLinked("foo:www.fo.uk", "foo:|www.fo.uk|");
+        assertLinked("foo-www.fo.uk", "foo-|www.fo.uk|");
     }
-    
+
     @Test
     public void html() {
         assertLinked("<a href=\"somelink\">www.example.org</a>", "<a href=\"somelink\">|www.example.org|</a>");
         assertLinked("<a href=\"www.example.org\">sometext</a>", "<a href=\"|www.example.org|\">sometext</a>");
         assertLinked("<p>www.example.org</p>", "<p>|www.example.org|</p>");
     }
-    
+
     @Test
     public void multiple() {
         assertLinked("www.one.org/ www.two.org/", "|www.one.org/| |www.two.org/|");
         assertLinked("www.one.org/ : www.two.org/", "|www.one.org/| : |www.two.org/|");
         assertLinked("(www.one.org/)(www.two.org/)", "(|www.one.org/|)(|www.two.org/|)");
     }
-    
+
     @Test
     public void international() {
         assertLinked("www.üñîçøðé.com/ä", "|www.üñîçøðé.com/ä|");

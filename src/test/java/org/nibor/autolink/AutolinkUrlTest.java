@@ -18,7 +18,7 @@ public class AutolinkUrlTest extends AutolinkTestCase {
     public static Iterable<Object[]> data() {
         return Arrays.asList(new Object[][]{
                 {LinkExtractor.builder().linkTypes(EnumSet.of(LinkType.URL)).build(), "URL"},
-                {LinkExtractor.builder().build(), "all"}
+                {LinkExtractor.builder().linkTypes(EnumSet.allOf(LinkType.class)).build(), "all"}
         });
     }
 
