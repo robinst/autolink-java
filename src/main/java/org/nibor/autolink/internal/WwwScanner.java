@@ -31,7 +31,7 @@ public class WwwScanner implements Scanner {
         return new LinkSpanImpl(LinkType.WWW, first, last + 1);
     }
     
-    private static final int findFirst(final CharSequence input, final int beginIndex, final int rewindIndex) {
+    private static int findFirst(final CharSequence input, final int beginIndex, final int rewindIndex) {
         if (beginIndex == rewindIndex) {
             return beginIndex;
         }
@@ -44,7 +44,7 @@ public class WwwScanner implements Scanner {
         return -1;
     }
     
-    private static final int findLast(final CharSequence input, final int beginIndex) {
+    private static int findLast(final CharSequence input, final int beginIndex) {
         final int last = Scanners.findUrlEnd(input, beginIndex);
         
         // Make sure there is at least one dot after the first dot,
@@ -57,11 +57,11 @@ public class WwwScanner implements Scanner {
         return -1;
     }
     
-    private static final boolean isAllowed(char c) {
+    private static boolean isAllowed(char c) {
         return c != '.' && !Scanners.isAlnum(c);
     }
     
-    private static final boolean isWWW(final CharSequence input, final int triggerIndex) {
+    private static boolean isWWW(final CharSequence input, final int triggerIndex) {
         return 
                 (input.charAt(triggerIndex + 1) == 'w')
              && (input.charAt(triggerIndex + 2) == 'w')

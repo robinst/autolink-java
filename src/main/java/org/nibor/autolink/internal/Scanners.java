@@ -18,7 +18,7 @@ public class Scanners {
         return c >= 0x80;
     }
 
-    public static final int findUrlEnd(CharSequence input, int beginIndex) {
+    public static int findUrlEnd(CharSequence input, int beginIndex) {
         int round = 0;
         int square = 0;
         int curly = 0;
