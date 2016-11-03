@@ -29,7 +29,7 @@ public class LinkSpanImpl implements LinkSpan {
     public int getEndIndex() {
         return endIndex;
     }
-
+    
     @Override
     public String toString() {
         return "Link{type=" + getType() + ", beginIndex=" + beginIndex + ", endIndex=" + endIndex + "}";
