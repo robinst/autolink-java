@@ -69,7 +69,7 @@ result;  // "wow <a href=\"http://test.com\">http://test.com</a> such linked"
 Features
 --------
 
-### URL extraction
+### Qualified URL extraction
 
 Extracts URLs of the form `scheme://example` with any scheme. URIs such
 as `example:test` are not matched (may be added as an option in the future).
@@ -92,6 +92,27 @@ Example input and linked result:
 * `http://üñîçøðé.com/` → [http://üñîçøðé.com/]()
 
 Also see [test cases](src/test/java/org/nibor/autolink/AutolinkUrlTest.java).
+
+### Simple link extraction
+
+Extract links not fully qualified URLs but still somewhat valid of the form `www.example.com`.
+
+The same heuristics applies as for the URL extraction.
+
+Examples:
+
+* `www.example.com.` → [www.example.com]().
+* `(www.example.com)` → ([www.example.com]())
+* `[..] link:www.example.com [..]` → \[..\] link:[www.example.com]() \[..\]
+
+Not supported:
+
+* Uppercase `www`'s, e.g. `WWW.example.com` and `wWw.example.com`
+* Too many or too few `w`'s, e.g. `wwww.example.com`
+
+At least one TLD is required, but multiple are allowed so `www.something.co.uk` is valid.
+
+Also see [test cases](src/test/java/org/nibor/autolink/AutolinkWwwTest.java).
 
 ### Email address extraction
 
