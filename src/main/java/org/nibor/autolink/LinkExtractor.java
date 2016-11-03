@@ -3,7 +3,7 @@ package org.nibor.autolink;
 import org.nibor.autolink.internal.EmailScanner;
 import org.nibor.autolink.internal.Scanner;
 import org.nibor.autolink.internal.UrlScanner;
-import org.nibor.autolink.internal.WwwUrlScanner;
+import org.nibor.autolink.internal.WwwScanner;
 
 import java.util.*;
 
@@ -18,7 +18,7 @@ public class LinkExtractor {
     private final Scanner wwwScanner;
     private final Scanner emailScanner;
 
-    private LinkExtractor(UrlScanner urlScanner, WwwUrlScanner wwwScanner, EmailScanner emailScanner) {
+    private LinkExtractor(UrlScanner urlScanner, WwwScanner wwwScanner, EmailScanner emailScanner) {
         this.urlScanner = urlScanner;
         this.wwwScanner = wwwScanner;
         this.emailScanner = emailScanner;
@@ -93,7 +93,7 @@ public class LinkExtractor {
          */
         public LinkExtractor build() {
             UrlScanner urlScanner = linkTypes.contains(LinkType.URL) ? new UrlScanner() : null;
-            WwwUrlScanner wwwScanner = linkTypes.contains(LinkType.WWW) ? new WwwUrlScanner() : null;
+            WwwScanner wwwScanner = linkTypes.contains(LinkType.WWW) ? new WwwScanner() : null;
             EmailScanner emailScanner = linkTypes.contains(LinkType.EMAIL) ? new EmailScanner(emailDomainMustHaveDot) : null;
             return new LinkExtractor(urlScanner, wwwScanner, emailScanner);
         }

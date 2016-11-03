@@ -10,7 +10,7 @@ import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
 @RunWith(Parameterized.class)
-public class AutolinkWwwUrlTest extends AutolinkTestCase {
+public class AutolinkWwwTest extends AutolinkTestCase {
 
     @Parameters(name = "{1}")
     public static Iterable<Object[]> data() {

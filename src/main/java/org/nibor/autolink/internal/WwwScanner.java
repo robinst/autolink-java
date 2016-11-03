@@ -4,11 +4,12 @@ import org.nibor.autolink.LinkSpan;
 import org.nibor.autolink.LinkType;
 
 /**
- * Scan for URLs starting from the trigger character "w", requires "www.".
+ * Scan for WWW addresses such as "www.example.org" starting from the trigger character "w".
+ * Requires "www." at the beginning and an additional dot in the domain.
  * <p>
  * Based on RFC 3986.
  */
-public class WwwUrlScanner implements Scanner {
+public class WwwScanner implements Scanner {
 
     @Override
     public LinkSpan scan(final CharSequence input, int triggerIndex, int rewindIndex) {
