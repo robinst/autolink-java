@@ -2,7 +2,7 @@ autolink-java
 =============
 
 Java library to extract links such as URLs and email addresses from plain text.
-Fast, small and tries to be smart with matching (text is hard).
+Fast, small and smart about recognizing where links end.
 
 Inspired by [Rinku](https://github.com/vmg/rinku). Similar to it, regular
 expressions are not used. Instead, the input text is parsed in one pass with

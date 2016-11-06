@@ -8,7 +8,8 @@
 
     <name>autolink-java</name>
     <description>
-        Java library to extract links (URLs, email addresses) from plain text; fast, small and hopefully smart
+        Java library to extract links (URLs, email addresses) from plain text;
+        fast, small and smart about recognizing where links end
     </description>
     <url>https://github.com/robinst/autolink-java</url>
 
