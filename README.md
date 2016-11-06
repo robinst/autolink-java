@@ -37,7 +37,9 @@ Extract links:
 import org.nibor.autolink.*;
 
 String input = "wow, so example: http://test.com";
-LinkExtractor linkExtractor = LinkExtractor.builder().build();
+LinkExtractor linkExtractor = LinkExtractor.builder()
+        .linkTypes(EnumSet.of(LinkType.URL, LinkType.WWW, LinkType.EMAIL))
+        .build();
 Iterable<LinkSpan> links = linkExtractor.extractLinks(input);
 LinkSpan link = links.iterator().next();
 link.getType();        // LinkType.URL
@@ -46,7 +48,13 @@ link.getEndIndex();    // 32
 input.substring(link.getBeginIndex(), link.getEndIndex());  // "http://test.com"
 ```
 
-Wrapping URLs in an <a> tag (doesn't handle escaping, uses Java 8):
+Note that by default all supported types of links are extracted. If
+you're only interested in specific types, narrow it down using the
+`linkTypes` method.
+
+There's also a static method to replace links found in the text. Here's
+an example of using that for wrapping URLs in an `<a>` tag. Note that it
+doesn't handle escaping at all:
 
 ```java
 import org.nibor.autolink.*;
@@ -91,7 +99,8 @@ Example input and linked result:
   [https://en.wikipedia.org/wiki/Link_(The_Legend_of_Zelda)]()
 * `http://üñîçøðé.com/` → [http://üñîçøðé.com/]()
 
-Also see [test cases](src/test/java/org/nibor/autolink/AutolinkUrlTest.java).
+Use `LinkType.URL` for this, and see [test
+cases here](src/test/java/org/nibor/autolink/AutolinkUrlTest.java).
 
 ### WWW link extraction
 
@@ -112,7 +121,8 @@ Not supported:
 
 The domain must have at least 3 parts, so `www.com` is not valid, but `www.something.co.uk` is.
 
-Also see [test cases](src/test/java/org/nibor/autolink/AutolinkWwwTest.java).
+Use `LinkType.WWW` for this, and see [test
+cases here](src/test/java/org/nibor/autolink/AutolinkWwwTest.java).
 
 ### Email address extraction
 
@@ -134,7 +144,8 @@ Not supported:
 Note that the domain must have at least one dot (e.g. `foo@com` isn't
 matched), unless the `emailDomainMustHaveDot` option is disabled.
 
-Also see [test cases](src/test/java/org/nibor/autolink/AutolinkEmailTest.java).
+Use `LinkType.EMAIL` for this, and see [test cases
+here](src/test/java/org/nibor/autolink/AutolinkEmailTest.java).
 
 Contributing
 ------------
