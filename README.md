@@ -104,9 +104,9 @@ cases here](src/test/java/org/nibor/autolink/AutolinkUrlTest.java).
 
 ### WWW link extraction
 
-Extract links not starting with `scheme://` but just starts with `www.` such as `www.example.com`.
-
-The same heuristics apply as for the URL extraction.
+Extract links like `www.example.com`. They need to start with `www.` but
+don't need a `scheme://`. For detecting the end of the link, the same
+heuristics apply as for URLs.
 
 Examples:
 
