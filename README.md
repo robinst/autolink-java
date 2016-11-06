@@ -93,6 +93,27 @@ Example input and linked result:
 
 Also see [test cases](src/test/java/org/nibor/autolink/AutolinkUrlTest.java).
 
+### WWW link extraction
+
+Extract links not starting with `scheme://` but just starts with `www.` such as `www.example.com`.
+
+The same heuristics apply as for the URL extraction.
+
+Examples:
+
+* `www.example.com.` → [www.example.com]().
+* `(www.example.com)` → ([www.example.com]())
+* `[..] link:www.example.com [..]` → \[..\] link:[www.example.com]() \[..\]
+
+Not supported:
+
+* Uppercase `www`'s, e.g. `WWW.example.com` and `wWw.example.com`
+* Too many or too few `w`'s, e.g. `wwww.example.com`
+
+The domain must have at least 3 parts, so `www.com` is not valid, but `www.something.co.uk` is.
+
+Also see [test cases](src/test/java/org/nibor/autolink/AutolinkWwwTest.java).
+
 ### Email address extraction
 
 Extracts emails such as `foo@example.com`. Matches international email
