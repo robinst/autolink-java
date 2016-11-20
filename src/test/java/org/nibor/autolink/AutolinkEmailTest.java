@@ -116,6 +116,12 @@ public class AutolinkEmailTest extends AutolinkTestCase {
         assertLinked("üñîçøðé@üñîçøðé.com", "|üñîçøðé@üñîçøðé.com|");
     }
 
+    @Test
+    public void triggerOverlap() {
+        // 'w' is a trigger character for WWW links. Make sure we can rewind enough.
+        assertLinked("www@example.com", "|www@example.com|");
+    }
+
     @Override
     protected LinkExtractor getLinkExtractor() {
         return linkExtractor;
