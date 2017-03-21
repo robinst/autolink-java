@@ -68,6 +68,18 @@ public class AutolinkWwwTest extends AutolinkTestCase {
         assertLinked("www.example.org/\u00A2", "|www.example.org/\u00A2|");
     }
 
+    @Test
+    public void replyLevel() {
+        assertLinked(">www.example.org/", ">|www.example.org/|");
+        assertLinked("> www.example.org/", "> |www.example.org/|");
+        assertLinked(">>www.example.org/", ">>|www.example.org/|");
+        assertLinked(">> www.example.org/", ">> |www.example.org/|");
+        assertLinked("> > www.example.org/", "> > |www.example.org/|");
+        assertLinked(">>>www.example.org/", ">>>|www.example.org/|");
+        assertLinked(">>> www.example.org/", ">>> |www.example.org/|");
+        assertLinked("> > > www.example.org/", "> > > |www.example.org/|");
+    }
+
     @Override
     protected LinkExtractor getLinkExtractor() {
         return linkExtractor;

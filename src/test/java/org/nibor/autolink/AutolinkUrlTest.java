@@ -185,6 +185,18 @@ public class AutolinkUrlTest extends AutolinkTestCase {
     }
 
     @Test
+    public void replyLevel() {
+        assertLinked(">http://example.org/", ">|http://example.org/|");
+        assertLinked("> http://example.org/", "> |http://example.org/|");
+        assertLinked(">>http://example.org/", ">>|http://example.org/|");
+        assertLinked(">> http://example.org/", ">> |http://example.org/|");
+        assertLinked("> > http://example.org/", "> > |http://example.org/|");
+        assertLinked(">>>http://example.org/", ">>>|http://example.org/|");
+        assertLinked(">>> http://example.org/", ">>> |http://example.org/|");
+        assertLinked("> > > http://example.org/", "> > > |http://example.org/|");
+    }
+
+    @Test
     public void linkToString() {
         Iterable<LinkSpan> links = getLinkExtractor().extractLinks("wow, so example: http://test.com");
         assertEquals("Link{type=URL, beginIndex=17, endIndex=32}", links.iterator().next().toString());
