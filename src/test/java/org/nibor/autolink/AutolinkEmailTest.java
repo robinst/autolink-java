@@ -122,6 +122,18 @@ public class AutolinkEmailTest extends AutolinkTestCase {
         assertLinked("www@example.com", "|www@example.com|");
     }
 
+    @Test
+    public void replyLevel() {
+        assertLinked(">foo@example.com", ">|foo@example.com|");
+        assertLinked("> foo@example.com", "> |foo@example.com|");
+        assertLinked(">>foo@example.com", ">>|foo@example.com|");
+        assertLinked(">> foo@example.com", ">> |foo@example.com|");
+        assertLinked("> > foo@example.com", "> > |foo@example.com|");
+        assertLinked(">>>foo@example.com", ">>>|foo@example.com|");
+        assertLinked(">>> foo@example.com", ">>> |foo@example.com|");
+        assertLinked("> > > foo@example.com", "> > > |foo@example.com|");
+    }
+
     @Override
     protected LinkExtractor getLinkExtractor() {
         return linkExtractor;
