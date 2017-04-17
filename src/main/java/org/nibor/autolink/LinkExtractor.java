@@ -30,17 +30,35 @@ public class LinkExtractor {
 
     /**
      * Extract the links from the input text. Can be called multiple times with different inputs (thread-safe).
-     *
-     * @param input the input text, must not be {@code null}
+     * @param input - the input text
      * @return a lazy iterable for the links in order that they appear in the input, never {@code null}
+     * @throws NullPointerException if the input argument is null 
      */
     public Iterable<LinkSpan> extractLinks(final CharSequence input) {
+    	if (input == null)
+    		throw new NullPointerException("input argument can't be null.");
         return new Iterable<LinkSpan>() {
             @Override
             public Iterator<LinkSpan> iterator() {
                 return new LinkIterator(input);
             }
         };
+    }
+    /**
+     * Extract all links form input text to list of strings.
+     * @param input - the input text
+     * @return the links from input text as list of strings
+     * @throws NullPointerException if the input argument is null
+     * @see {@link String}, {@link List}
+     * 
+     */
+    public List<String> extractLinksToListOfStrings(CharSequence input) {
+    	Iterable<LinkSpan> container = extractLinks(input);
+    	List<String> links = new ArrayList<>();
+    	for (LinkSpan link : container)
+    		links.add(input.subSequence
+    				(link.getBeginIndex(), link.getEndIndex()).toString());
+    	return links;
     }
 
     private Scanner trigger(char c) {
