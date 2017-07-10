@@ -15,5 +15,9 @@ public enum LinkType {
     /**
      * URL such as {@code www.example.com}
      */
-    WWW
+    WWW,
+    /**
+     * Twitter/Facebook/Instagram HashTag such as {@code #photooftheday}
+     */
+    HASHTAG
 }

@@ -1,9 +1,7 @@
 package org.nibor.autolink;
 
-import org.nibor.autolink.internal.EmailScanner;
+import org.nibor.autolink.internal.*;
 import org.nibor.autolink.internal.Scanner;
-import org.nibor.autolink.internal.UrlScanner;
-import org.nibor.autolink.internal.WwwScanner;
 
 import java.util.*;
 
@@ -17,11 +15,14 @@ public class LinkExtractor {
     private final Scanner urlScanner;
     private final Scanner wwwScanner;
     private final Scanner emailScanner;
+    private final Scanner hashTagScanner;
 
-    private LinkExtractor(UrlScanner urlScanner, WwwScanner wwwScanner, EmailScanner emailScanner) {
+    private LinkExtractor(UrlScanner urlScanner, WwwScanner wwwScanner, EmailScanner emailScanner, HashTagScanner
+            hashTagScanner) {
         this.urlScanner = urlScanner;
         this.wwwScanner = wwwScanner;
         this.emailScanner = emailScanner;
+        this.hashTagScanner = hashTagScanner;
     }
 
     public static Builder builder() {
@@ -51,6 +52,8 @@ public class LinkExtractor {
                 return emailScanner;
             case 'w':
                 return wwwScanner;
+            case '#':
+                return hashTagScanner;
         }
         return null;
     }
@@ -62,6 +65,7 @@ public class LinkExtractor {
 
         private Set<LinkType> linkTypes = EnumSet.allOf(LinkType.class);
         private boolean emailDomainMustHaveDot = true;
+        private Set<Character> allowedHashTagSpecialChars = null;
 
         private Builder() {
         }
@@ -95,7 +99,20 @@ public class LinkExtractor {
             UrlScanner urlScanner = linkTypes.contains(LinkType.URL) ? new UrlScanner() : null;
             WwwScanner wwwScanner = linkTypes.contains(LinkType.WWW) ? new WwwScanner() : null;
             EmailScanner emailScanner = linkTypes.contains(LinkType.EMAIL) ? new EmailScanner(emailDomainMustHaveDot) : null;
-            return new LinkExtractor(urlScanner, wwwScanner, emailScanner);
+            HashTagScanner hashTagScanner = linkTypes.contains(LinkType.HASHTAG) ? new HashTagScanner(allowedHashTagSpecialChars) : null;
+            return new LinkExtractor(urlScanner, wwwScanner, emailScanner, hashTagScanner);
+        }
+
+        /**
+         * Configure {@link HashTagScanner} with the given Set of allowed special characters.
+         * Note that the set cannot contain ' ' character since it is the delimiter of a hash tag.
+         *
+         * @param allowedSpecialChars set of allowed special characters
+         * @return the configured link extractor
+         */
+        public Builder allowedHashTagSpecialChars(Set<Character> allowedSpecialChars) {
+            this.allowedHashTagSpecialChars = allowedSpecialChars;
+            return this;
         }
     }
 
