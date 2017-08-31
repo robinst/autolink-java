@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## 0.7.0 - 2017-08-31
+## [0.7.0] - 2017-08-31
 ### Changed
 - Don't autolink if authority is only "end" characters, e.g. like `http://.` or
   `http://"` (#15)
@@ -51,6 +51,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Initial release!
 
 
+[0.7.0]: https://github.com/robinst/autolink-java/compare/autolink-0.6.0...autolink-0.7.0
 [0.6.0]: https://github.com/robinst/autolink-java/compare/autolink-0.5.0...autolink-0.6.0
 [0.5.0]: https://github.com/robinst/autolink-java/compare/autolink-0.4.0...autolink-0.5.0
 [0.4.0]: https://github.com/robinst/autolink-java/compare/autolink-0.3.0...autolink-0.4.0
