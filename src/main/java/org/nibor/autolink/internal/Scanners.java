@@ -97,6 +97,7 @@ public class Scanners {
                 case '\u009D':
                 case '\u009E':
                 case '\u009F':
+                case '\u00A0': //non-breaking space
                     // These can never be part of an URL, so stop now. See RFC 3986 and RFC 3987.
                     // Some characters are not in the above list, even they are not in "unreserved" or "reserved":
                     //   '"', '\\', '^', '`', '{', '|', '}'
