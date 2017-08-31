@@ -56,8 +56,14 @@ public class AutolinkUrlTest extends AutolinkTestCase {
     }
 
     @Test
-    public void hostTooShort() {
+    public void authority() {
         assertLinked("ab://", "ab://");
+        assertLinked("http://", "http://");
+        assertLinked("http:// ", "http:// ");
+        assertLinked("\"http://\"", "\"http://\"");
+        assertLinked("\"http://...\", ", "\"http://...\", ");
+
+        assertLinked("http://a.", "|http://a|.");
     }
 
     @Test

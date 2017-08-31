@@ -24,7 +24,7 @@ public class Scanners {
         int curly = 0;
         boolean doubleQuote = false;
         boolean singleQuote = false;
-        int last = beginIndex;
+        int last = -1;
         loop:
         for (int i = beginIndex; i < input.length(); i++) {
             char c = input.charAt(i);

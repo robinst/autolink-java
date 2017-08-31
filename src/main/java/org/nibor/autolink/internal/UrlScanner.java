@@ -24,8 +24,11 @@ public class UrlScanner implements Scanner {
         }
 
         int last = Scanners.findUrlEnd(input, afterSlashSlash);
+        if (last == -1) {
+            return null;
+        }
 
-        return new LinkSpanImpl(LinkType.URL, first, last + 1 );
+        return new LinkSpanImpl(LinkType.URL, first, last + 1);
     }
 
     // See "scheme" in RFC 3986

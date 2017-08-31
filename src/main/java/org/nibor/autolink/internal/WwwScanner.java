@@ -46,6 +46,9 @@ public class WwwScanner implements Scanner {
 
     private static int findLast(final CharSequence input, final int beginIndex) {
         final int last = Scanners.findUrlEnd(input, beginIndex);
+        if (last == -1) {
+            return -1;
+        }
 
         // Make sure there is at least one dot after the first dot,
         // so www.something is not allowed, but www.something.co.uk is
