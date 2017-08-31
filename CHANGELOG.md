@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Don't autolink if authority is only "end" characters, e.g. like `http://.` or
   `http://"` (#15)
+- Stop URLs at Unicode whitespace characters such as U+00A0 NO-BREAK SPACE,
+  thanks @otopba!
 
 ## [0.6.0] - 2016-11-07
 ### Added

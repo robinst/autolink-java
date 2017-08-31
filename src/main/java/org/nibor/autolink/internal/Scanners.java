@@ -97,12 +97,31 @@ public class Scanners {
                 case '\u009D':
                 case '\u009E':
                 case '\u009F':
-                case '\u00A0': //non-breaking space
-                    // These can never be part of an URL, so stop now. See RFC 3986 and RFC 3987.
+                    // The above can never be part of an URL, so stop now. See RFC 3986 and RFC 3987.
                     // Some characters are not in the above list, even they are not in "unreserved" or "reserved":
                     //   '"', '\\', '^', '`', '{', '|', '}'
                     // The reason for this is that other link detectors also allow them. Also see below, we require
                     // the quote and the braces to be balanced.
+                case '\u00A0': // no-break space
+                case '\u2000': // en quad
+                case '\u2001': // em quad
+                case '\u2002': // en space
+                case '\u2003': // em space
+                case '\u2004': // three-per-em space
+                case '\u2005': // four-per-em space
+                case '\u2006': // six-per-em space
+                case '\u2007': // figure space
+                case '\u2008': // punctuation space
+                case '\u2009': // thin space
+                case '\u200A': // hair space
+                case '\u2028': // line separator
+                case '\u2029': // paragraph separator
+                case '\u202F': // narrow no-break space
+                case '\u205F': // medium mathematical space
+                case '\u3000': // ideographic space
+                    // While these are allowed by RFC 3987, they are Unicode whitespace characters
+                    // that look like a space, so it would be confusing not to end URLs.
+                    // They are also excluded from IDNs by some browsers.
                     break loop;
                 case '?':
                 case '!':

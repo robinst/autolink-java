@@ -191,6 +191,33 @@ public class AutolinkUrlTest extends AutolinkTestCase {
     }
 
     @Test
+    public void unicodeWhitespace() {
+        char[] whitespace = new char[] {
+            '\u00A0', // no-break space
+            '\u2000', // en quad
+            '\u2001', // em quad
+            '\u2002', // en space
+            '\u2003', // em space
+            '\u2004', // three-per-em space
+            '\u2005', // four-per-em space
+            '\u2006', // six-per-em space
+            '\u2007', // figure space
+            '\u2008', // punctuation space
+            '\u2009', // thin space
+            '\u200A', // hair space
+            '\u2028', // line separator
+            '\u2029', // paragraph separator
+            '\u202F', // narrow no-break space
+            '\u205F', // medium mathematical space
+            '\u3000', // ideographic space
+        };
+
+        for (char c : whitespace) {
+            assertLinked("http://example.org" + c, "|http://example.org|" + c);
+        }
+    }
+
+    @Test
     public void replyLevel() {
         assertLinked(">http://example.org/", ">|http://example.org/|");
         assertLinked("> http://example.org/", "> |http://example.org/|");
