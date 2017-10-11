@@ -185,9 +185,9 @@ public class AutolinkUrlTest extends AutolinkTestCase {
 
     @Test
     public void international() {
-        assertLinked("http://üñîçøðé.com/ä", "|http://üñîçøðé.com/ä|");
-        assertLinked("http://example.org/\u00A1", "|http://example.org/\u00A1|");
-        assertLinked("http://example.org/\u00A2", "|http://example.org/\u00A2|");
+        assertNotLinked("http://üñîçøðé.com/ä");
+        assertLinked("http://example.org/\u00A1", "|http://example.org/|\u00A1");
+        assertLinked("http://example.org/\u00A2", "|http://example.org/|\u00A2");
     }
 
     @Test
