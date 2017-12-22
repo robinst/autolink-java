@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+### Changed
+- Add `Automatic-Module-Name` manifest entry so that library can be used
+  nicely in Java 9 modules
+
 ## [0.7.0] - 2017-08-31
 ### Changed
 - Don't autolink if authority is only "end" characters, e.g. like `http://.` or
