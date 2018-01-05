@@ -11,7 +11,7 @@
         Java library to extract links (URLs, email addresses) from plain text;
         fast, small and smart about recognizing where links end
     </description>
-    <url>https://github.com/robinst/autolink-java</url>
+    <url>https://github.com/YusukeIwaki/autolink-java</url>
 
     <prerequisites>
         <maven>3.1.0</maven>
@@ -226,6 +226,11 @@
             <email>robin@nibor.org</email>
             <url>https://github.com/robinst/</url>
         </developer>
+        <developer>
+            <name>YusukeIwaki</name>
+            <email>yusuke.iwaki@example.com</email>
+            <url>https://github.com/YusukeIwaki/</url>
+        </developer>
     </developers>
 
     <licenses>
@@ -236,9 +241,9 @@
     </licenses>
 
     <scm>
-        <connection>scm:git:git@github.com:robinst/autolink-java.git</connection>
-        <developerConnection>scm:git:git@github.com:robinst/autolink-java.git</developerConnection>
-        <url>https://github.com/robinst/autolink-java</url>
+        <connection>scm:git:git@github.com:YusukeIwaki/autolink-java.git</connection>
+        <developerConnection>scm:git:git@github.com:YusukeIwaki/autolink-java.git</developerConnection>
+        <url>https://github.com/YusukeIwaki/autolink-java</url>
       <tag>HEAD</tag>
   </scm>
 
