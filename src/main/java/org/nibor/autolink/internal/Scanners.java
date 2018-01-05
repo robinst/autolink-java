@@ -28,6 +28,9 @@ public class Scanners {
         loop:
         for (int i = beginIndex; i < input.length(); i++) {
             char c = input.charAt(i);
+            if (isNonAscii(c)) {
+                break;
+            }
             switch (c) {
                 case '\u0000':
                 case '\u0001':

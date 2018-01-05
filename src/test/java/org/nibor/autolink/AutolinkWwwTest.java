@@ -63,9 +63,9 @@ public class AutolinkWwwTest extends AutolinkTestCase {
 
     @Test
     public void international() {
-        assertLinked("www.üñîçøðé.com/ä", "|www.üñîçøðé.com/ä|");
-        assertLinked("www.example.org/\u00A1", "|www.example.org/\u00A1|");
-        assertLinked("www.example.org/\u00A2", "|www.example.org/\u00A2|");
+        assertNotLinked("www.üñîçøðé.com/ä");
+        assertLinked("www.example.org/\u00A1", "|www.example.org/|\u00A1");
+        assertLinked("www.example.org/\u00A2", "|www.example.org/|\u00A2");
     }
 
     @Test
