@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## [0.8.0] - 2018-01-10
 ### Changed
 - Add `Automatic-Module-Name` manifest entry so that library can be used
   nicely in Java 9 modules
@@ -56,6 +56,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Initial release!
 
 
+[0.8.0]: https://github.com/robinst/autolink-java/compare/autolink-0.7.0...autolink-0.8.0
 [0.7.0]: https://github.com/robinst/autolink-java/compare/autolink-0.6.0...autolink-0.7.0
 [0.6.0]: https://github.com/robinst/autolink-java/compare/autolink-0.5.0...autolink-0.6.0
 [0.5.0]: https://github.com/robinst/autolink-java/compare/autolink-0.4.0...autolink-0.5.0
