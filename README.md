@@ -79,9 +79,11 @@ Features
 
 ### URL extraction
 
-Extracts URLs of the form `scheme://example` with any scheme. URIs such
-as `example:test` are not matched (may be added as an option in the future).
-If only certain schemes should be allowed, the result can be filtered.
+Extracts URLs of the form `scheme://example` with any potentially valid scheme.
+URIs such as `example:test` are not matched (may be added as an option in the
+future). If only certain schemes should be allowed, the result can be filtered.
+(Note that schemes can contain dots, so `foo.http://example` is recognized as
+a single link.)
 
 Includes heuristics for not including trailing delimiters such as punctuation
 and unbalanced parentheses, see examples below.
