@@ -9,6 +9,8 @@ import org.junit.runners.Parameterized.Parameters;
 import java.util.Arrays;
 import java.util.EnumSet;
 
+import static org.junit.Assert.assertEquals;
+
 @RunWith(Parameterized.class)
 public class AutolinkWwwTest extends AutolinkTestCase {
 
@@ -28,6 +30,7 @@ public class AutolinkWwwTest extends AutolinkTestCase {
 
     @Test
     public void notLinked() {
+        assertEquals(link(null, "|", null), "");
         assertNotLinked("");
         assertNotLinked("wwwsomething.com");
         assertNotLinked("ww.foo.com");

@@ -108,7 +108,7 @@ public class LinkExtractor {
         private int rewindIndex = 0;
 
         public LinkIterator(CharSequence input) {
-            this.input = input;
+            this.input = null == input ? "" : input;
         }
 
         @Override

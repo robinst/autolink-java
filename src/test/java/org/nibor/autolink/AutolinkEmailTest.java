@@ -9,6 +9,8 @@ import org.junit.runners.Parameterized.Parameters;
 import java.util.Arrays;
 import java.util.EnumSet;
 
+import static org.junit.Assert.assertEquals;
+
 @RunWith(Parameterized.class)
 public class AutolinkEmailTest extends AutolinkTestCase {
 
@@ -32,6 +34,7 @@ public class AutolinkEmailTest extends AutolinkTestCase {
 
     @Test
     public void notLinked() {
+        assertEquals(link(null, "|", null), "");
         assertNotLinked("");
         assertNotLinked("foo");
         assertNotLinked("@");
