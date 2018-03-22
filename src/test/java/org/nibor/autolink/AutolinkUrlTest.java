@@ -30,6 +30,7 @@ public class AutolinkUrlTest extends AutolinkTestCase {
 
     @Test
     public void notLinked() {
+        assertEquals(link(null, "|", null), "");
         assertNotLinked("");
         assertNotLinked("foo");
         assertNotLinked(":");

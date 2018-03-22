@@ -15,6 +15,9 @@ public class Autolink {
      * @return the rendered string
      */
     public static String renderLinks(CharSequence input, Iterable<LinkSpan> links, LinkRenderer linkRenderer) {
+        if (null == input) {
+            return "";
+        }
         StringBuilder sb = new StringBuilder(input.length() + 16);
         int lastIndex = 0;
         for (LinkSpan link : links) {
