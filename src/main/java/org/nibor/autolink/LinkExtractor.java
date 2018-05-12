@@ -31,10 +31,13 @@ public class LinkExtractor {
     /**
      * Extract the links from the input text. Can be called multiple times with different inputs (thread-safe).
      *
-     * @param input the input text, must not be {@code null}
-     * @return a lazy iterable for the links in order that they appear in the input, never {@code null}
+     * @param input the input text, must not be null
+     * @return a lazy iterable for the links in order that they appear in the input, never null
      */
     public Iterable<LinkSpan> extractLinks(final CharSequence input) {
+        if (input == null) {
+            throw new NullPointerException("input must not be null");
+        }
         return new Iterable<LinkSpan>() {
             @Override
             public Iterator<LinkSpan> iterator() {
