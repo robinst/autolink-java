@@ -126,6 +126,7 @@ public class AutolinkUrlTest extends AutolinkTestCase {
         assertLinked("{http://example.org/}", "{|http://example.org/|}");
         assertLinked("\"http://example.org/\"", "\"|http://example.org/|\"");
         assertLinked("'http://example.org/'", "'|http://example.org/|'");
+        assertLinked("http://foo[.]example[.]org/abc/", "|http://foo[.]example[.]org/abc/|");
     }
 
     @Test
