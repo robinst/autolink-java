@@ -119,7 +119,6 @@ public class AutolinkUrlTest extends AutolinkTestCase {
         assertLinked("http://example.org/a(b)", "|http://example.org/a(b)|");
         assertLinked("http://example.org/a[b]", "|http://example.org/a[b]|");
         assertLinked("http://example.org/a{b}", "|http://example.org/a{b}|");
-        assertLinked("http://example.org/a\"b\"", "|http://example.org/a\"b\"|");
         assertLinked("http://example.org/a'b'", "|http://example.org/a'b'|");
         assertLinked("(http://example.org/)", "(|http://example.org/|)");
         assertLinked("[http://example.org/]", "[|http://example.org/|]");
@@ -145,13 +144,15 @@ public class AutolinkUrlTest extends AutolinkTestCase {
 
     @Test
     public void quotes() {
-        assertLinked("http://example.org/\"_(foo)", "|http://example.org/\"_(foo)|");
-        assertLinked("http://example.org/\"_(foo)\"", "|http://example.org/\"_(foo)\"|");
-        assertLinked("http://example.org/\"\"", "|http://example.org/\"\"|");
-        assertLinked("http://example.org/\"\"\"", "|http://example.org/\"\"|\"");
-        assertLinked("http://example.org/\".", "|http://example.org/|\".");
-        assertLinked("http://example.org/\"a", "|http://example.org/\"a|");
+        assertLinked("http://example.org/\'_(foo)", "|http://example.org/\'_(foo)|");
+        assertLinked("http://example.org/\'_(foo)\'", "|http://example.org/\'_(foo)\'|");
+        assertLinked("http://example.org/\'\'", "|http://example.org/\'\'|");
+        assertLinked("http://example.org/\'\'\'", "|http://example.org/\'\'|\'");
+        assertLinked("http://example.org/\'.", "|http://example.org/|\'.");
         assertLinked("http://example.org/it's", "|http://example.org/it's|");
+        // " not allowed in URLs
+        assertLinked("http://example.org/\"a", "|http://example.org/|\"a");
+        assertLinked("http://example.org/\"a\"", "|http://example.org/|\"a\"");
     }
 
     @Test

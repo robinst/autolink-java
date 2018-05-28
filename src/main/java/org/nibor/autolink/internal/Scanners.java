@@ -62,6 +62,7 @@ public class Scanners {
                 case '\u001E':
                 case '\u001F':
                 case ' ':
+                case '\"':
                 case '<':
                 case '>':
                 case '\u007F':
@@ -99,9 +100,9 @@ public class Scanners {
                 case '\u009F':
                     // The above can never be part of an URL, so stop now. See RFC 3986 and RFC 3987.
                     // Some characters are not in the above list, even they are not in "unreserved" or "reserved":
-                    //   '"', '\\', '^', '`', '{', '|', '}'
+                    //   '\\', '^', '`', '{', '|', '}'
                     // The reason for this is that other link detectors also allow them. Also see below, we require
-                    // the quote and the braces to be balanced.
+                    // the braces to be balanced.
                 case '\u00A0': // no-break space
                 case '\u2000': // en quad
                 case '\u2001': // em quad
@@ -173,12 +174,6 @@ public class Scanners {
                     } else {
                         // More closing than opening brackets, stop now
                         break loop;
-                    }
-                    break;
-                case '"':
-                    doubleQuote = !doubleQuote;
-                    if (!doubleQuote) {
-                        last = i;
                     }
                     break;
                 case '\'':
