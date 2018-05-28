@@ -6,7 +6,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+### Added
+- Add `extractSpans` method that also returns the text pieces of the
+  input before, between and after links. This makes it more convenient
+  to write code that transforms the whole input text without having to
+  manually keep track of indexes.
 ### Changed
+- Deprecated `Autolink.renderLinks` and `LinkRenderer`, see "added".
 - Stop URLs when encountering an `"`. This is consistent with RFC 3986,
   and it seems unlikely that a user would have an unescaped `"` in a URL
   anyway, as browsers escape it when you copy an URL that contains one.

@@ -13,7 +13,9 @@ public class Autolink {
      * @param links the links to render, see {@link LinkExtractor} to extract them
      * @param linkRenderer the link rendering implementation
      * @return the rendered string
+     * @deprecated use {@link LinkExtractor#extractSpans(CharSequence)} instead
      */
+    @Deprecated
     public static String renderLinks(CharSequence input, Iterable<LinkSpan> links, LinkRenderer linkRenderer) {
         if (input == null) {
             throw new NullPointerException("input must not be null");
