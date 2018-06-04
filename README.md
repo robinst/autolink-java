@@ -173,6 +173,6 @@ Pull requests, issues and comments welcome ☺. For pull requests:
 License
 -------
 
-Copyright (c) 2015-2017 Robin Stocker and others, see Git history
+Copyright (c) 2015-2018 Robin Stocker and others, see Git history
 
 MIT licensed, see LICENSE file.
