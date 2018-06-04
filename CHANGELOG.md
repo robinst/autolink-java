@@ -5,17 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## [0.9.0] - 2018-06-04
 ### Added
 - Add `extractSpans` method that also returns the text pieces of the
   input before, between and after links. This makes it more convenient
   to write code that transforms the whole input text without having to
   manually keep track of indexes.
 ### Changed
-- Deprecated `Autolink.renderLinks` and `LinkRenderer`, see "added".
-- Stop URLs when encountering an `"`. This is consistent with RFC 3986,
-  and it seems unlikely that a user would have an unescaped `"` in a URL
-  anyway, as browsers escape it when you copy an URL that contains one.
+- Deprecated `Autolink.renderLinks` and `LinkRenderer`, see added (#21)
+- Stop URLs when encountering `"`. This is consistent with RFC 3986, and
+  it seems unlikely that a user would have an unescaped `"` in an URL
+  anyway, as browsers escape it when copying an URL with it. (#21)
 
 ## [0.8.0] - 2018-01-10
 ### Changed
@@ -68,6 +68,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Initial release!
 
 
+[0.9.0]: https://github.com/robinst/autolink-java/compare/autolink-0.8.0...autolink-0.9.0
 [0.8.0]: https://github.com/robinst/autolink-java/compare/autolink-0.7.0...autolink-0.8.0
 [0.7.0]: https://github.com/robinst/autolink-java/compare/autolink-0.6.0...autolink-0.7.0
 [0.6.0]: https://github.com/robinst/autolink-java/compare/autolink-0.5.0...autolink-0.6.0
