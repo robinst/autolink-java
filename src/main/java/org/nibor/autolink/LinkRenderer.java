@@ -1,8 +1,11 @@
 package org.nibor.autolink;
 
 /**
- * Renderer for a link.
+ * Renderer for a link
+ *
+ * @deprecated use {@link LinkExtractor#extractSpans(CharSequence)} instead.
  */
+@Deprecated
 public interface LinkRenderer {
 
     /**

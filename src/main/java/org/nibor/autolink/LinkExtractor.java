@@ -1,9 +1,7 @@
 package org.nibor.autolink;
 
-import org.nibor.autolink.internal.EmailScanner;
+import org.nibor.autolink.internal.*;
 import org.nibor.autolink.internal.Scanner;
-import org.nibor.autolink.internal.UrlScanner;
-import org.nibor.autolink.internal.WwwScanner;
 
 import java.util.*;
 
@@ -33,6 +31,7 @@ public class LinkExtractor {
      *
      * @param input the input text, must not be null
      * @return a lazy iterable for the links in order that they appear in the input, never null
+     * @see #extractSpans(CharSequence) extractSpans to also get spans for the plain text pieces of the input
      */
     public Iterable<LinkSpan> extractLinks(final CharSequence input) {
         if (input == null) {
@@ -42,6 +41,28 @@ public class LinkExtractor {
             @Override
             public Iterator<LinkSpan> iterator() {
                 return new LinkIterator(input);
+            }
+        };
+    }
+
+    /**
+     * Extract spans from the input text. A span is a substring of the input and represents either a link
+     * (see {@link LinkSpan}) or plain text outside a link.
+     * <p>
+     * Using this is more convenient than {@link #extractLinks} if you want to transform the whole input text to
+     * a different format.
+     *
+     * @param input the input text, must not be null
+     * @return a lazy iterable for the spans in order that they appear in the input, never null
+     */
+    public Iterable<Span> extractSpans(final CharSequence input) {
+        if (input == null) {
+            throw new NullPointerException("input must not be null");
+        }
+        return new Iterable<Span>() {
+            @Override
+            public Iterator<Span> iterator() {
+                return new SpanIterator(input, new LinkIterator(input));
             }
         };
     }
@@ -83,7 +104,7 @@ public class LinkExtractor {
 
         /**
          * @param emailDomainMustHaveDot true if the domain in an email address is required to have more than one part,
-         *                               false if it can also just have single part (e.g. foo@com); true by default
+         * false if it can also just have single part (e.g. foo@com); true by default
          * @return this builder
          */
         public Builder emailDomainMustHaveDot(boolean emailDomainMustHaveDot) {
@@ -158,6 +179,62 @@ public class LinkExtractor {
                     index++;
                 }
             }
+        }
+    }
+
+    private class SpanIterator implements Iterator<Span> {
+
+        private final CharSequence input;
+        private final LinkIterator linkIterator;
+
+        private int index = 0;
+        private LinkSpan nextLink = null;
+
+        public SpanIterator(CharSequence input, LinkIterator linkIterator) {
+            this.input = input;
+            this.linkIterator = linkIterator;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return index < input.length();
+        }
+
+        private Span nextTextSpan(int endIndex) {
+            Span span = new SpanImpl(index, endIndex);
+            index = endIndex;
+            return span;
+        }
+
+        @Override
+        public Span next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+
+            if (nextLink == null) {
+                if (linkIterator.hasNext()) {
+                    nextLink = linkIterator.next();
+                } else {
+                    return nextTextSpan(input.length());
+                }
+            }
+
+            if (index < nextLink.getBeginIndex()) {
+                // text before link, return plain
+                return nextTextSpan(nextLink.getBeginIndex());
+            } else {
+                // at link, return it and make sure we continue after it next time
+                Span span = nextLink;
+                index = nextLink.getEndIndex();
+                nextLink = null;
+                return span;
+            }
+        }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException("remove");
         }
     }
 }

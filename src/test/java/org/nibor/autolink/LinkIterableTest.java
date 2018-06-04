@@ -7,18 +7,18 @@ import java.util.NoSuchElementException;
 
 import static org.junit.Assert.*;
 
-public class LinkExtractorIterableTest {
+public class LinkIterableTest {
 
     @Test
     public void iteratorIsNew() {
-        Iterable<LinkSpan> iterable = getSingleElementIterable();
+        Iterable<LinkSpan> iterable = getSingleLinkIterable();
         assertEquals(LinkType.URL, iterable.iterator().next().getType());
         assertEquals(LinkType.URL, iterable.iterator().next().getType());
     }
 
     @Test
     public void hasNextOnlyAdvancesOnce() {
-        Iterable<LinkSpan> iterable = getSingleElementIterable();
+        Iterable<LinkSpan> iterable = getSingleLinkIterable();
         Iterator<LinkSpan> iterator = iterable.iterator();
         assertTrue(iterator.hasNext());
         assertTrue(iterator.hasNext());
@@ -29,7 +29,7 @@ public class LinkExtractorIterableTest {
 
     @Test(expected = NoSuchElementException.class)
     public void nextThrowsNoSuchElementException() {
-        Iterable<LinkSpan> iterable = getSingleElementIterable();
+        Iterable<LinkSpan> iterable = getSingleLinkIterable();
         Iterator<LinkSpan> iterator = iterable.iterator();
         assertNotNull(iterator.next());
         iterator.next();
@@ -37,11 +37,11 @@ public class LinkExtractorIterableTest {
 
     @Test(expected = UnsupportedOperationException.class)
     public void removeUnsupported() {
-        Iterable<LinkSpan> iterable = getSingleElementIterable();
+        Iterable<LinkSpan> iterable = getSingleLinkIterable();
         iterable.iterator().remove();
     }
 
-    private Iterable<LinkSpan> getSingleElementIterable() {
+    private Iterable<LinkSpan> getSingleLinkIterable() {
         String input = "foo http://example.com";
         return LinkExtractor.builder().build().extractLinks(input);
     }

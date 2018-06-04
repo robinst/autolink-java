@@ -52,26 +52,38 @@ Note that by default all supported types of links are extracted. If
 you're only interested in specific types, narrow it down using the
 `linkTypes` method.
 
-There's also a static method to replace links found in the text. Here's
-an example of using that for wrapping URLs in an `<a>` tag. Note that it
-doesn't handle escaping at all:
+There's another method which is convenient for when you want to transform
+all of the input text to something else. Here's an example of using that
+to transform the text to HTML and wrapping URLs in an `<a>` tag (escaping
+is done using owasp-java-encoder):
 
 ```java
 import org.nibor.autolink.*;
+import org.owasp.encoder.Encode;
 
 String input = "wow http://test.com such linked";
 LinkExtractor linkExtractor = LinkExtractor.builder()
         .linkTypes(EnumSet.of(LinkType.URL)) // limit to URLs
         .build();
-Iterable<LinkSpan> links = linkExtractor.extractLinks(input);
-String result = Autolink.renderLinks(input, links, (link, text, sb) -> {
-    sb.append("<a href=\"");
-    sb.append(text, link.getBeginIndex(), link.getEndIndex());
-    sb.append("\">");
-    sb.append(text, link.getBeginIndex(), link.getEndIndex());
-    sb.append("</a>");
-});
-result;  // "wow <a href=\"http://test.com\">http://test.com</a> such linked"
+Iterable<Span> spans = linkExtractor.extractSpans(input);
+
+StringBuilder sb = new StringBuilder();
+for (Span span : spans) {
+    String text = input.substring(span.getBeginIndex(), span.getEndIndex());
+    if (span instanceof LinkSpan) {
+        // span is a URL
+        sb.append("<a href=\"");
+        sb.append(Encode.forHtmlAttribute(text));
+        sb.append("\">");
+        sb.append(Encode.forHtml(text));
+        sb.append("</a>");
+    } else {
+        // span is plain text before/after link
+        sb.append(Encode.forHtml(text));
+    }
+}
+
+sb.toString();  // "wow <a href=\"http://test.com\">http://test.com</a> such linked"
 ```
 
 Features

@@ -32,7 +32,7 @@ public class AutolinkBenchmark extends AutolinkTestCase {
 
     @Benchmark
     public void generatedText() {
-        link(GENERATED_INPUT, "|", null);
+        renderExtractedLinks(GENERATED_INPUT, "|", null);
     }
 
     @Override
