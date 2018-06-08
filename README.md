@@ -161,6 +161,47 @@ matched), unless the `emailDomainMustHaveDot` option is disabled.
 Use `LinkType.EMAIL` for this, and see [test cases
 here](src/test/java/org/nibor/autolink/AutolinkEmailTest.java).
 
+### Hashtag extraction
+Extract Twitter/Facebook/Instagram Hashtags such as #photooftheday. Hashtags need to start with `#`. In general hashtags do not contain special characters other than `_`. Also hashtags cannot be all numeric. For example, #123 is not a valid hashtag.
+
+Examples:
+
+* `#photooftheday` → [#photooftheday]()
+* `#photo_of_the_day.` → [#photo_of_the_day]().
+
+You can configure the allowed special characters in the hashtag. For example if you want to extract the hashtags
+containing both `_` and '-', then you can configure your builder as shown:
+
+```java
+import org.nibor.autolink.*;
+
+String input = "#photo-of-the-day";
+Set<Character> allowedSpecialChars = new HashSet<Character>() {{
+    add('_');
+    add('-');
+}};
+LinkExtractor linkExtractor = LinkExtractor.builder()
+        .linkTypes(EnumSet.of(LinkType.URL, LinkType.HASHTAG))
+        .allowedHashtagSpecialChars(allowedSpecialChars)
+        .build();
+Iterable<LinkSpan> links = linkExtractor.extractLinks(input);
+String result = Autolink.renderLinks(input, links, new LinkRenderer() {
+    @Override
+    public void render(LinkSpan link, CharSequence text, StringBuilder sb) {
+        System.out.println("Link: " + link);
+        sb.append("<a href=\"https://api.twitter.com/1.1/search/tweets.json?q=");
+        sb.append(text, link.getBeginIndex(), link.getEndIndex());
+        sb.append("\">");
+        sb.append(text, link.getBeginIndex(), link.getEndIndex());
+        sb.append("</a>");
+    }
+});
+System.out.println(result); // <a href="https://api.twitter.com/1.1/search/tweets.json?q=#photo-of-the-day">#photo-of-the-day</a>
+```
+
+see [test cases
+here](src/test/java/org/nibor/autolink/AutolinkHashtagTest.java).
+
 Contributing
 ------------
 
