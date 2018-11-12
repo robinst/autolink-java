@@ -8,24 +8,24 @@ Inspired by [Rinku](https://github.com/vmg/rinku). Similar to it, regular
 expressions are not used. Instead, the input text is parsed in one pass with
 limited backtracking.
 
-This library requires Java 7. It works on Android (minimum API level 15). It has no external dependencies.
+This library requires at least Java 7 (tested up to Java 11). It works on Android (minimum API level 15). It has no external dependencies.
 
 Maven coordinates
 (see
-[here](https://search.maven.org/#artifactdetails|org.nibor.autolink|autolink|0.9.0|jar)
+[here](https://search.maven.org/artifact/org.nibor.autolink/autolink/0.10.0/jar)
 for other build systems):
 
 ```xml
 <dependency>
     <groupId>org.nibor.autolink</groupId>
     <artifactId>autolink</artifactId>
-    <version>0.9.0</version>
+    <version>0.10.0</version>
 </dependency>
 ```
 
 [![Build status](https://travis-ci.org/robinst/autolink-java.svg?branch=master)](https://travis-ci.org/robinst/autolink-java)
 [![Coverage status](https://coveralls.io/repos/github/robinst/autolink-java/badge.svg?branch=master)](https://coveralls.io/github/robinst/autolink-java?branch=master)
-[![Maven Central status](https://img.shields.io/maven-central/v/org.nibor.autolink/autolink.svg)](https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.nibor.autolink%22%20AND%20a%3A%22autolink%22)
+[![Maven Central status](https://img.shields.io/maven-central/v/org.nibor.autolink/autolink.svg)](https://search.maven.org/search?q=g:org.nibor.autolink%20AND%20a:autolink&core=gav)
 
 
 Usage
