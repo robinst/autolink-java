@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.10.0] - 2018-11-12
+### Changed
+- Stop URLs at '`' characters too, same as < and >
+
 ## [0.9.0] - 2018-06-04
 ### Added
 - Add `extractSpans` method that also returns the text pieces of the
@@ -62,12 +66,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   `foo@com` is not matched by default).
   Can be disabled by calling `emailDomainMustHaveDot(false)` on builder.
 
-
 ## 0.1.0 - 2015-06-13
 ### Added
 - Initial release!
 
 
+[0.10.0]: https://github.com/robinst/autolink-java/compare/autolink-0.9.0...autolink-0.10.0
 [0.9.0]: https://github.com/robinst/autolink-java/compare/autolink-0.8.0...autolink-0.9.0
 [0.8.0]: https://github.com/robinst/autolink-java/compare/autolink-0.7.0...autolink-0.8.0
 [0.7.0]: https://github.com/robinst/autolink-java/compare/autolink-0.6.0...autolink-0.7.0
