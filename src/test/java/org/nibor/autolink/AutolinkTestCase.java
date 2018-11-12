@@ -24,18 +24,21 @@ public abstract class AutolinkTestCase {
     protected abstract LinkExtractor getLinkExtractor();
 
     protected String renderExtractedLinks(String input, final String marker, final LinkType expectedLinkType) {
-        Iterable<LinkSpan> links = getLinkExtractor().extractLinks(input);
-        return Autolink.renderLinks(input, links, new LinkRenderer() {
-            @Override
-            public void render(LinkSpan link, CharSequence text, StringBuilder sb) {
+        StringBuilder sb = new StringBuilder();
+        for (Span span : getLinkExtractor().extractSpans(input)) {
+            if (span instanceof LinkSpan) {
+                LinkSpan link = (LinkSpan) span;
                 if (expectedLinkType != null) {
                     assertEquals(expectedLinkType, link.getType());
                 }
                 sb.append(marker);
-                sb.append(text, link.getBeginIndex(), link.getEndIndex());
+                sb.append(input, link.getBeginIndex(), link.getEndIndex());
                 sb.append(marker);
+            } else {
+                sb.append(input, span.getBeginIndex(), span.getEndIndex());
             }
-        });
+        }
+        return sb.toString();
     }
 
     protected String renderExtractedSpans(String input, final String marker, final LinkType expectedLinkType) {
