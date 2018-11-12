@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [0.10.0] - 2018-11-12
 ### Changed
 - Stop URLs at '`' characters too, same as < and >
+- Build and test on Java 11
 
 ## [0.9.0] - 2018-06-04
 ### Added
