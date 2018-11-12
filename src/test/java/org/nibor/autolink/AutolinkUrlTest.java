@@ -153,6 +153,9 @@ public class AutolinkUrlTest extends AutolinkTestCase {
         // " not allowed in URLs
         assertLinked("http://example.org/\"a", "|http://example.org/|\"a");
         assertLinked("http://example.org/\"a\"", "|http://example.org/|\"a\"");
+        // ` not allowed in URLs
+        assertLinked("http://example.org/`a", "|http://example.org/|`a");
+        assertLinked("http://example.org/`a`", "|http://example.org/|`a`");
     }
 
     @Test
