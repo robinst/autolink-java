@@ -86,6 +86,9 @@ for (Span span : spans) {
 sb.toString();  // "wow <a href=\"http://test.com\">http://test.com</a> such linked"
 ```
 
+Note that this assumes that the input is plain text, not HTML.
+Also see the "What this is not" section below.
+
 Features
 --------
 
@@ -160,6 +163,23 @@ matched), unless the `emailDomainMustHaveDot` option is disabled.
 
 Use `LinkType.EMAIL` for this, and see [test cases
 here](src/test/java/org/nibor/autolink/AutolinkEmailTest.java).
+
+What this is not
+----------------
+
+This library is intentionally *not* aware of HTML. If it was, it would need to depend on an HTML parser and renderer.
+Consider this input:
+
+```
+HTML that contains <a href="https://one.example">links</a> but also plain URLs like https://two.example.
+```
+
+If you want to turn the plain links into `a` elements but leave the already linked ones intact, I recommend:
+
+1. Parse the HTML using an HTML parser library
+2. Walk through the resulting DOM and use autolink-java to find links within *text* nodes only
+3. Turn those into `a` elements
+4. Render the DOM back to HTML
 
 Contributing
 ------------
