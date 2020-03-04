@@ -10,6 +10,8 @@ limited backtracking.
 
 This library requires at least Java 7 (tested up to Java 11). It works on Android (minimum API level 15). It has no external dependencies.
 
+[Demo](https://onecompiler.com/java/3vjubz6sz)
+
 Maven coordinates
 (see
 [here](https://search.maven.org/artifact/org.nibor.autolink/autolink/0.10.0/jar)
