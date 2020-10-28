@@ -25,8 +25,8 @@ for other build systems):
 </dependency>
 ```
 
-[![Build status](https://travis-ci.org/robinst/autolink-java.svg?branch=master)](https://travis-ci.org/robinst/autolink-java)
-[![Coverage status](https://coveralls.io/repos/github/robinst/autolink-java/badge.svg?branch=master)](https://coveralls.io/github/robinst/autolink-java?branch=master)
+[![ci](https://github.com/robinst/autolink-java/workflows/ci/badge.svg)](https://github.com/robinst/autolink-java/actions?query=workflow%3Aci)
+[![Coverage status](https://codecov.io/gh/robinst/autolink-java/branch/main/graph/badge.svg)](https://codecov.io/gh/robinst/autolink-java)
 [![Maven Central status](https://img.shields.io/maven-central/v/org.nibor.autolink/autolink.svg)](https://search.maven.org/search?q=g:org.nibor.autolink%20AND%20a:autolink&core=gav)
 
 
