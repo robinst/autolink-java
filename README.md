@@ -2,15 +2,38 @@ autolink-java
 =============
 
 Java library to extract links such as URLs and email addresses from plain text.
-Fast, small and smart about recognizing where links end.
+It's smart about where a link ends, such as with trailing punctuation.
 
-Inspired by [Rinku](https://github.com/vmg/rinku). Similar to it, regular
-expressions are not used. Instead, the input text is parsed in one pass with
-limited backtracking.
+[![ci](https://github.com/robinst/autolink-java/workflows/ci/badge.svg)](https://github.com/robinst/autolink-java/actions?query=workflow%3Aci)
+[![Coverage status](https://codecov.io/gh/robinst/autolink-java/branch/main/graph/badge.svg)](https://codecov.io/gh/robinst/autolink-java)
+[![Maven Central status](https://img.shields.io/maven-central/v/org.nibor.autolink/autolink.svg)](https://search.maven.org/search?q=g:org.nibor.autolink%20AND%20a:autolink&core=gav)
 
-This library requires at least Java 7 (tested up to Java 11). It works on Android (minimum API level 15). It has no external dependencies.
+Introduction
+------------
 
-[Demo](https://onecompiler.com/java/3vjubz6sz)
+You might think: "Do I need a library for this? I can just write a regex for this!".
+Let's look at a few cases:
+
+* In text like `https://example.com/.` the link should not include the trailing dot
+* `https://example.com/,` should not include the trailing comma
+* `(https://example.com/)` should not include the parens
+
+Seems simple enough. But then we also have these cases:
+
+* `https://en.wikipedia.org/wiki/Link_(The_Legend_of_Zelda)` should include the trailing paren
+* `https://üñîçøðé.com/ä` should also work for Unicode (including Emoji and Punycode)
+* `<https://example.com/>` should not include angle brackets
+
+This library behaves as you'd expect in the above cases and many more.
+It parses the input text in one pass with limited backtracking.
+
+Thanks to [Rinku](https://github.com/vmg/rinku) for the inspiration.
+
+Usage
+-----
+
+This library requires at least Java 7 (tested up to Java 11). It works on Android (minimum API level 15).
+It has no external dependencies.
 
 Maven coordinates
 (see
@@ -25,15 +48,7 @@ for other build systems):
 </dependency>
 ```
 
-[![ci](https://github.com/robinst/autolink-java/workflows/ci/badge.svg)](https://github.com/robinst/autolink-java/actions?query=workflow%3Aci)
-[![Coverage status](https://codecov.io/gh/robinst/autolink-java/branch/main/graph/badge.svg)](https://codecov.io/gh/robinst/autolink-java)
-[![Maven Central status](https://img.shields.io/maven-central/v/org.nibor.autolink/autolink.svg)](https://search.maven.org/search?q=g:org.nibor.autolink%20AND%20a:autolink&core=gav)
-
-
-Usage
------
-
-Extract links:
+Extracting links:
 
 ```java
 import org.nibor.autolink.*;
@@ -54,10 +69,12 @@ Note that by default all supported types of links are extracted. If
 you're only interested in specific types, narrow it down using the
 `linkTypes` method.
 
-There's another method which is convenient for when you want to transform
-all of the input text to something else. Here's an example of using that
-to transform the text to HTML and wrapping URLs in an `<a>` tag (escaping
-is done using owasp-java-encoder):
+The above returns all the links. Sometimes what you want to do is go over some input,
+process the links and keep the surrounding text. For that case,
+there's an `extractSpans` method.
+
+Here's an example of using that to transform the text to HTML and wrapping URLs in
+an `<a>` tag (escaping is done using owasp-java-encoder):
 
 ```java
 import org.nibor.autolink.*;
