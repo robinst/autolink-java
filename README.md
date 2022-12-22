@@ -32,8 +32,8 @@ Thanks to [Rinku](https://github.com/vmg/rinku) for the inspiration.
 Usage
 -----
 
-This library requires at least Java 7 (tested up to Java 11). It works on Android (minimum API level 15).
-It has no external dependencies.
+This library is supported on Java 8 or later. It works on Android
+(minimum API level 19). It has no external dependencies.
 
 Maven coordinates
 (see
@@ -208,6 +208,6 @@ See CONTRIBUTING.md file.
 License
 -------
 
-Copyright (c) 2015-2018 Robin Stocker and others, see Git history
+Copyright (c) 2015-2022 Robin Stocker and others, see Git history
 
 MIT licensed, see LICENSE file.
