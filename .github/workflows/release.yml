@@ -36,6 +36,8 @@ jobs:
         run: |
           gpg --list-keys
           mvn clean verify -Prelease
+        env:
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
 
       - name: Release
         if: ${{ false }}
