@@ -4,7 +4,7 @@
 
     <groupId>org.nibor.autolink</groupId>
     <artifactId>autolink</artifactId>
-    <version>0.10.1-SNAPSHOT</version>
+    <version>0.10.1</version>
 
     <name>autolink-java</name>
     <description>
@@ -237,7 +237,7 @@
         <connection>scm:git:git@github.com:robinst/autolink-java.git</connection>
         <developerConnection>scm:git:https://github.com/robinst/autolink-java.git</developerConnection>
         <url>https://github.com/robinst/autolink-java</url>
-      <tag>HEAD</tag>
+      <tag>autolink-0.10.1</tag>
   </scm>
 
 </project>
