@@ -228,7 +228,7 @@
 
     <scm>
         <connection>scm:git:git@github.com:robinst/autolink-java.git</connection>
-        <developerConnection>scm:git:git@github.com:robinst/autolink-java.git</developerConnection>
+        <developerConnection>scm:git:https://github.com/robinst/autolink-java.git</developerConnection>
         <url>https://github.com/robinst/autolink-java</url>
       <tag>HEAD</tag>
   </scm>
