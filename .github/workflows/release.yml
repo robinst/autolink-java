@@ -34,9 +34,9 @@ jobs:
 
       - name: Release
         run: |
-          mvn -B release:prepare release:perform
+          mvn -B -Dpassword=${{ secrets.GITHUB_TOKEN }} release:prepare
+          mvn -B release:perform
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
