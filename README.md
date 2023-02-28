@@ -37,14 +37,14 @@ This library is supported on Java 9 or later. It works on Android
 
 Maven coordinates
 (see
-[here](https://search.maven.org/artifact/org.nibor.autolink/autolink/0.10.1/jar)
+[here](https://central.sonatype.com/artifact/org.nibor.autolink/autolink/0.11.0/overview)
 for other build systems):
 
 ```xml
 <dependency>
     <groupId>org.nibor.autolink</groupId>
     <artifactId>autolink</artifactId>
-    <version>0.10.1</version>
+    <version>0.11.0</version>
 </dependency>
 ```
 
