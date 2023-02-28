@@ -4,7 +4,7 @@
 
     <groupId>org.nibor.autolink</groupId>
     <artifactId>autolink</artifactId>
-    <version>0.10.3-SNAPSHOT</version>
+    <version>0.11.0-SNAPSHOT</version>
 
     <name>autolink-java</name>
     <description>
