@@ -32,7 +32,7 @@ Thanks to [Rinku](https://github.com/vmg/rinku) for the inspiration.
 Usage
 -----
 
-This library is supported on Java 8 or later. It works on Android
+This library is supported on Java 9 or later. It works on Android
 (minimum API level 19). It has no external dependencies.
 
 Maven coordinates
