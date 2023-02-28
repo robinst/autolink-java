@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.11.0] - 2023-02-27
+### Changed
+- Modular JAR: Require at least Java 9 and add a module descriptor (module-info),
+  remove no longer necessary `Automatic-Module-Name` header
+
 ## [0.10.1] - 2022-12-23
 ### Changed
 - Bump maven plugin versions
@@ -76,6 +81,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Initial release!
 
 
+[0.11.0]: https://github.com/robinst/autolink-java/compare/autolink-0.10.1...autolink-0.11.0
 [0.10.1]: https://github.com/robinst/autolink-java/compare/autolink-0.10.0...autolink-0.10.1
 [0.10.0]: https://github.com/robinst/autolink-java/compare/autolink-0.9.0...autolink-0.10.0
 [0.9.0]: https://github.com/robinst/autolink-java/compare/autolink-0.8.0...autolink-0.9.0
