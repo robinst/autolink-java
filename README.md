@@ -53,16 +53,17 @@ Extracting links:
 ```java
 import org.nibor.autolink.*;
 
-String input = "wow, so example: http://test.com";
-LinkExtractor linkExtractor = LinkExtractor.builder()
-        .linkTypes(EnumSet.of(LinkType.URL, LinkType.WWW, LinkType.EMAIL))
+var input = "two links: https://test.com and https://example.com";
+var linkExtractor = LinkExtractor.builder()
+        .linkTypes(EnumSet.of(LinkType.URL)) // limit to URLs
         .build();
-Iterable<LinkSpan> links = linkExtractor.extractLinks(input);
-LinkSpan link = links.iterator().next();
-link.getType();        // LinkType.URL
-link.getBeginIndex();  // 17
-link.getEndIndex();    // 32
-input.substring(link.getBeginIndex(), link.getEndIndex());  // "http://test.com"
+var links = new ArrayList<>();
+for (var span : linkExtractor.extractLinks(input)) {
+    var link = input.substring(span.getBeginIndex(), span.getEndIndex());
+    links.add(link);
+}
+
+links;  // List.of("https://test.com", "https://example.com")
 ```
 
 Note that by default all supported types of links are extracted. If
