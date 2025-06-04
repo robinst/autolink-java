@@ -1,32 +1,31 @@
 package org.nibor.autolink;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.Parameter;
+import org.junit.jupiter.params.ParameterizedClass;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.Arrays;
 import java.util.EnumSet;
+import java.util.Set;
+import java.util.stream.Stream;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
-@RunWith(Parameterized.class)
+@ParameterizedClass
+@MethodSource("data")
 public class AutolinkUrlTest extends AutolinkTestCase {
 
-    @Parameters(name = "{1}")
-    public static Iterable<Object[]> data() {
-        return Arrays.asList(new Object[][]{
-                {LinkExtractor.builder().linkTypes(EnumSet.of(LinkType.URL)).build(), "URL"},
-                {LinkExtractor.builder().linkTypes(EnumSet.allOf(LinkType.class)).build(), "all"}
-        });
+    public static Stream<Arguments> data() {
+        return Stream.of(
+                arguments(EnumSet.of(LinkType.URL)),
+                arguments(EnumSet.allOf(LinkType.class))
+        );
     }
 
-    @Parameter(0)
-    public LinkExtractor linkExtractor;
-
-    @Parameter(1)
-    public String description;
+    @Parameter
+    public Set<LinkType> linkTypes;
 
     @Test
     public void notLinked() {
@@ -197,24 +196,24 @@ public class AutolinkUrlTest extends AutolinkTestCase {
 
     @Test
     public void unicodeWhitespace() {
-        char[] whitespace = new char[] {
-            '\u00A0', // no-break space
-            '\u2000', // en quad
-            '\u2001', // em quad
-            '\u2002', // en space
-            '\u2003', // em space
-            '\u2004', // three-per-em space
-            '\u2005', // four-per-em space
-            '\u2006', // six-per-em space
-            '\u2007', // figure space
-            '\u2008', // punctuation space
-            '\u2009', // thin space
-            '\u200A', // hair space
-            '\u2028', // line separator
-            '\u2029', // paragraph separator
-            '\u202F', // narrow no-break space
-            '\u205F', // medium mathematical space
-            '\u3000', // ideographic space
+        char[] whitespace = new char[]{
+                '\u00A0', // no-break space
+                '\u2000', // en quad
+                '\u2001', // em quad
+                '\u2002', // en space
+                '\u2003', // em space
+                '\u2004', // three-per-em space
+                '\u2005', // four-per-em space
+                '\u2006', // six-per-em space
+                '\u2007', // figure space
+                '\u2008', // punctuation space
+                '\u2009', // thin space
+                '\u200A', // hair space
+                '\u2028', // line separator
+                '\u2029', // paragraph separator
+                '\u202F', // narrow no-break space
+                '\u205F', // medium mathematical space
+                '\u3000', // ideographic space
         };
 
         for (char c : whitespace) {
@@ -242,7 +241,7 @@ public class AutolinkUrlTest extends AutolinkTestCase {
 
     @Override
     protected LinkExtractor getLinkExtractor() {
-        return linkExtractor;
+        return LinkExtractor.builder().linkTypes(linkTypes).build();
     }
 
     protected void assertLinked(String input, String expected) {

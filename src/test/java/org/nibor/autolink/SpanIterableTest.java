@@ -1,10 +1,10 @@
 package org.nibor.autolink;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SpanIterableTest {
 
@@ -40,18 +40,18 @@ public class SpanIterableTest {
                 extractSpansAsText("http://example.org https://example.com"));
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void nextThrowsNoSuchElementException() {
         Iterable<Span> iterable = extractSpans("test");
         Iterator<Span> iterator = iterable.iterator();
         assertNotNull(iterator.next());
-        iterator.next();
+        assertThrows(NoSuchElementException.class, iterator::next);
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void removeUnsupported() {
         Iterable<Span> iterable = extractSpans("test");
-        iterable.iterator().remove();
+        assertThrows(UnsupportedOperationException.class, () -> iterable.iterator().remove());
     }
 
     private Iterable<Span> extractSpans(String input) {

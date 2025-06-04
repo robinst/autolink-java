@@ -1,11 +1,11 @@
 package org.nibor.autolink;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class LinkIterableTest {
 
@@ -27,18 +27,18 @@ public class LinkIterableTest {
         assertFalse(iterator.hasNext());
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void nextThrowsNoSuchElementException() {
         Iterable<LinkSpan> iterable = getSingleLinkIterable();
         Iterator<LinkSpan> iterator = iterable.iterator();
         assertNotNull(iterator.next());
-        iterator.next();
+        assertThrows(NoSuchElementException.class, iterator::next);
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void removeUnsupported() {
         Iterable<LinkSpan> iterable = getSingleLinkIterable();
-        iterable.iterator().remove();
+        assertThrows(UnsupportedOperationException.class, () -> iterable.iterator().remove());
     }
 
     private Iterable<LinkSpan> getSingleLinkIterable() {

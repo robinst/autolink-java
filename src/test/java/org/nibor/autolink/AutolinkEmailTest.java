@@ -1,34 +1,34 @@
 package org.nibor.autolink;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.Parameter;
+import org.junit.jupiter.params.ParameterizedClass;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.Arrays;
 import java.util.EnumSet;
+import java.util.Set;
+import java.util.stream.Stream;
 
-@RunWith(Parameterized.class)
+import static org.junit.jupiter.params.provider.Arguments.arguments;
+
+@ParameterizedClass
+@MethodSource("data")
 public class AutolinkEmailTest extends AutolinkTestCase {
 
-    @Parameters(name = "{2}")
-    public static Iterable<Object[]> data() {
-        return Arrays.asList(new Object[][]{
-                {LinkExtractor.builder().linkTypes(EnumSet.of(LinkType.EMAIL)).build(), true, "email"},
-                {LinkExtractor.builder().linkTypes(EnumSet.allOf(LinkType.class)).build(), true, "all"},
-                {LinkExtractor.builder().emailDomainMustHaveDot(false).build(), false, "all, single part domain"}
-        });
+    public static Stream<Arguments> data() {
+        return Stream.of(
+                arguments(EnumSet.of(LinkType.EMAIL), true),
+                arguments(EnumSet.allOf(LinkType.class), true),
+                arguments(EnumSet.allOf(LinkType.class), false)
+        );
     }
 
     @Parameter(0)
-    public LinkExtractor linkExtractor;
+    public Set<LinkType> linkTypes;
 
     @Parameter(1)
     public boolean domainMustHaveDot;
-
-    @Parameter(2)
-    public String description;
 
     @Test
     public void notLinked() {
@@ -136,7 +136,7 @@ public class AutolinkEmailTest extends AutolinkTestCase {
 
     @Override
     protected LinkExtractor getLinkExtractor() {
-        return linkExtractor;
+        return LinkExtractor.builder().linkTypes(linkTypes).emailDomainMustHaveDot(domainMustHaveDot).build();
     }
 
     private void assertLinked(String input, String expected) {

@@ -1,30 +1,31 @@
 package org.nibor.autolink;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
 
-import java.util.Arrays;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.Parameter;
+import org.junit.jupiter.params.ParameterizedClass;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
 import java.util.EnumSet;
+import java.util.Set;
+import java.util.stream.Stream;
 
-@RunWith(Parameterized.class)
+import static org.junit.jupiter.params.provider.Arguments.arguments;
+
+@ParameterizedClass
+@MethodSource("data")
 public class AutolinkWwwTest extends AutolinkTestCase {
 
-    @Parameters(name = "{1}")
-    public static Iterable<Object[]> data() {
-        return Arrays.asList(new Object[][]{
-                {LinkExtractor.builder().linkTypes(EnumSet.of(LinkType.WWW)).build(), "WWW"},
-                {LinkExtractor.builder().linkTypes(EnumSet.allOf(LinkType.class)).build(), "all"}
-        });
+    public static Stream<Arguments> data() {
+        return Stream.of(
+                arguments(EnumSet.of(LinkType.WWW)),
+                arguments(EnumSet.allOf(LinkType.class))
+        );
     }
 
-    @Parameter(0)
-    public LinkExtractor linkExtractor;
-
-    @Parameter(1)
-    public String description;
+    @Parameter
+    public Set<LinkType> linkTypes;
 
     @Test
     public void notLinked() {
@@ -82,7 +83,7 @@ public class AutolinkWwwTest extends AutolinkTestCase {
 
     @Override
     protected LinkExtractor getLinkExtractor() {
-        return linkExtractor;
+        return LinkExtractor.builder().linkTypes(linkTypes).build();
     }
 
     private void assertLinked(String input, String expected) {
