@@ -209,6 +209,6 @@ See CONTRIBUTING.md file.
 License
 -------
 
-Copyright (c) 2015-2022 Robin Stocker and others, see Git history
+Copyright (c) 2015, Robin Stocker and others, see Git history
 
 MIT licensed, see LICENSE file.
