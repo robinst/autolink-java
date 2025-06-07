@@ -94,7 +94,7 @@ public class LinkExtractor {
          * @param linkTypes the link types that should be extracted (by default, all types are extracted)
          * @return this builder
          */
-        public Builder linkTypes(LinkType...linkTypes) {
+        public Builder linkTypes(LinkType... linkTypes) {
             if (linkTypes == null) {
                 throw new NullPointerException("linkTypes must not be null");
             }
